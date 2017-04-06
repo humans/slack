@@ -25,4 +25,18 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Boot the model.
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        static::saving(function (self $user) {
+            if ($user->isDirty('password')) {
+                $user->password = bcrypt($user->password);
+            }
+        });
+    }
 }

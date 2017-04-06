@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Message;
 use App\Channel;
+use App\Events\MessageSent;
 use Illuminate\Http\Request;
 
 class MessagesController extends Controller
@@ -16,10 +17,12 @@ class MessagesController extends Controller
     public function store(Request $request, Channel $channel)
     {
         $message = $channel->messages()->save(new Message([
-            'content' => $request->message,
+            'content' => $request->content,
             'user_id' => $request->user()->id,
         ]));
 
-        event(new MessageSent($channel, $message));
+        broadcast(new MessageSent($message->load('user')));
+
+        return $message;
     }
 }

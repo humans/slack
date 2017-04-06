@@ -46,5 +46,10 @@ window.Echo = new Echo({
     broadcaster: 'pusher',
     key: 'aedd54192305c7a81468',
     cluster: 'ap1',
-    encrypted: true,
 });
+
+window.Echo
+    .private('channel.general')
+    .listen('message', (e) => {
+        console.error(e)
+    });

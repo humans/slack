@@ -15,7 +15,7 @@ class LoginController extends Controller
     public function store(Request $request)
     {
         if (! $auth = Auth::attempt($request->only('email', 'password'))) {
-            return redirect()->route('logic.create');
+            return redirect()->route('login.create');
         }
 
         return redirect('/');

@@ -13,8 +13,6 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example', require('./components/Example.vue'));
-
 const app = new Vue({
     el: '#app',
 
@@ -33,25 +31,38 @@ const app = new Vue({
 
     methods: {
         join (channel) {
+            if (this.currentChannel) {
+                window.Echo.leave(this.currentChannel.name);
+            }
+
             this.currentChannel = channel;
 
-            this.subscription = window.Echo.channel(channel.name);
+            window.Echo
+                .private(`channel.${channel.name}`)
+                .listen('message.sent', ({ message }) => {
+                    console.error(message);
+                    this.messages.push(message);
+                });
         },
 
         send () {
             window.axios
-                .post(`/api/channels/${this.currentChannel.id}/messages`)
+                .post(`/api/channels/${this.currentChannel.id}/messages`, { content: this.message })
                 .then(({ data }) => {
-                    this.messages = this.messages.concat(data);
-                })
+                    this.messages.push(data);
 
-            this.message = null;
+                    this.message = null;
+                });
         },
 
         refresh () {
             window.axios
                 .get('/api/channels')
-                .then(({ data }) => this.channels = data);
+                .then(({ data }) => {
+                    this.channels = data;
+
+                    this.join(data[0]);
+                });
         },
     },
 });
