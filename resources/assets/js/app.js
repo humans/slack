@@ -50,13 +50,11 @@ const app = new Vue({
         },
 
         send () {
+            this.message = null;
+
             window.axios
                 .post(`/api/channels/${this.currentChannel.id}/messages`, { content: this.message })
-                .then(({ data }) => {
-                    this.messages.push(data);
-
-                    this.message = null;
-                });
+                .then(({ data }) => this.messages.push(data));
         },
 
         refresh () {

@@ -1012,12 +1012,11 @@ var app = new Vue({
         send: function send() {
             var _this2 = this;
 
+            this.message = null;
+
             window.axios.post('/api/channels/' + this.currentChannel.id + '/messages', { content: this.message }).then(function (_ref3) {
                 var data = _ref3.data;
-
-                _this2.messages.push(data);
-
-                _this2.message = null;
+                return _this2.messages.push(data);
             });
         },
         refresh: function refresh() {
