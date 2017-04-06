@@ -974,6 +974,8 @@ var app = new Vue({
     el: '#app',
 
     data: {
+        team: window.Laravel.team,
+
         channels: [],
         messages: [],
 
@@ -1003,7 +1005,7 @@ var app = new Vue({
                 return _this.messages = data.latest_messages;
             });
 
-            window.Echo.private('channel.' + channel.name).listen('MessageSent', function (_ref2) {
+            window.Echo.private(this.team + '.channel.' + channel.name).listen('MessageSent', function (_ref2) {
                 var message = _ref2.message;
 
                 _this.messages.push(message);
@@ -1012,12 +1014,12 @@ var app = new Vue({
         send: function send() {
             var _this2 = this;
 
-            this.message = null;
-
-            window.axios.post('/api/channels/' + this.currentChannel.id + '/messages', { content: this.message }).then(function (_ref3) {
+            window.axios.post('/api/channels/' + this.currentChannel.id + '/messages', { message: this.message }).then(function (_ref3) {
                 var data = _ref3.data;
                 return _this2.messages.push(data);
             });
+
+            this.message = null;
         },
         refresh: function refresh() {
             var _this3 = this;

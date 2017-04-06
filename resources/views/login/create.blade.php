@@ -1,4 +1,4 @@
-<form action="{{ route('login.store') }}" method="POST">
+<form action="{{ route('login.store', $team) }}" method="POST">
     {{ csrf_field() }}
 
     <div>
