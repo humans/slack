@@ -8,4 +8,9 @@ class Channel extends Model
     {
         return $this->hasMany(Message::class);
     }
+
+    public function latestMessages()
+    {
+        return $this->hasMany(Message::class)->limit(5);
+    }
 }

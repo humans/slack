@@ -995,10 +995,16 @@ var app = new Vue({
                 window.Echo.leave(this.currentChannel.name);
             }
 
+            this.messages = [];
             this.currentChannel = channel;
 
-            window.Echo.private('channel.' + channel.name).listen('MessageSent', function (_ref) {
-                var message = _ref.message;
+            window.axios.get('/api/channels/' + this.currentChannel.id).then(function (_ref) {
+                var data = _ref.data;
+                return _this.messages = data.latest_messages;
+            });
+
+            window.Echo.private('channel.' + channel.name).listen('MessageSent', function (_ref2) {
+                var message = _ref2.message;
 
                 _this.messages.push(message);
             });
@@ -1006,8 +1012,8 @@ var app = new Vue({
         send: function send() {
             var _this2 = this;
 
-            window.axios.post('/api/channels/' + this.currentChannel.id + '/messages', { content: this.message }).then(function (_ref2) {
-                var data = _ref2.data;
+            window.axios.post('/api/channels/' + this.currentChannel.id + '/messages', { content: this.message }).then(function (_ref3) {
+                var data = _ref3.data;
 
                 _this2.messages.push(data);
 
@@ -1017,8 +1023,8 @@ var app = new Vue({
         refresh: function refresh() {
             var _this3 = this;
 
-            window.axios.get('/api/channels').then(function (_ref3) {
-                var data = _ref3.data;
+            window.axios.get('/api/channels').then(function (_ref4) {
+                var data = _ref4.data;
 
                 _this3.channels = data;
 

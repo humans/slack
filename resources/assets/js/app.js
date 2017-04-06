@@ -35,7 +35,12 @@ const app = new Vue({
                 window.Echo.leave(this.currentChannel.name);
             }
 
+            this.messages = [];
             this.currentChannel = channel;
+
+            window.axios
+                .get(`/api/channels/${this.currentChannel.id}`)
+                .then(({ data }) => this.messages = data.latest_messages);
 
             window.Echo
                 .private(`channel.${channel.name}`)

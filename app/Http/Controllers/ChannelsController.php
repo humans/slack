@@ -10,4 +10,9 @@ class ChannelsController extends Controller
     {
         return Channel::all();
     }
+
+    public function show($channel)
+    {
+        return Channel::with('latestMessages', 'latestMessages.user')->find($channel);
+    }
 }
