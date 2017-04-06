@@ -1014,7 +1014,7 @@ var app = new Vue({
 
             this.message = null;
 
-            window.axios.post('/api/channels/' + this.currentChannel.id + '/messages', { content: this.message }).then(function (_ref3) {
+            window.axios.post('/api/channels/' + this.currentChannel.id + '/messages', { message: this.message }).then(function (_ref3) {
                 var data = _ref3.data;
                 return _this2.messages.push(data);
             });

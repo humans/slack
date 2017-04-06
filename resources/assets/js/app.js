@@ -53,7 +53,7 @@ const app = new Vue({
             this.message = null;
 
             window.axios
-                .post(`/api/channels/${this.currentChannel.id}/messages`, { content: this.message })
+                .post(`/api/channels/${this.currentChannel.id}/messages`, { message: this.message })
                 .then(({ data }) => this.messages.push(data));
         },
 

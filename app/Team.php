@@ -16,6 +16,28 @@ class Team extends Model
     }
 
     /**
+     * Add a channel under the team.
+     *
+     * @param  array  $attributes
+     * @return Channel
+     */
+    public function addChannel(array $attributes)
+    {
+        return $this->channels()->save(new Channel($attributes));
+    }
+
+    /**
+     * Return the channel from the name.
+     *
+     * @param  string  $name
+     * @return Channel
+     */
+    public function channel(string $name)
+    {
+        return $this->channels()->whereName($name)->first();
+    }
+
+    /**
      * The key for routing.
      *
      * @return string

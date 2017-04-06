@@ -15,15 +15,19 @@ class MessageSent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    private $team;
     public $message;
 
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param  Team  $team
+     * @param  Message  $message
+     * @return MessageSent
      */
-    public function __construct(Message $message)
+    public function __construct(Team $team, Message $message)
     {
+        $this->team = $team;
         $this->message = $message;
     }
 
@@ -36,6 +40,6 @@ class MessageSent implements ShouldBroadcast
     {
         $this->message->load('user', 'channel');
 
-        return new PrivateChannel('channel.' . $this->message->channel->name);
+        return new PrivateChannel($this->team->slug . '.channel.' . $this->message->channel->name);
     }
 }

@@ -39,4 +39,30 @@ class User extends Authenticatable
             }
         });
     }
+
+    /**
+     * Send a message in the channel.
+     *
+     * @param  Channel  $channel
+     * @param  string  $message
+     * @return Message
+     */
+    public function sendMessage(Channel $channel, string $message)
+    {
+        $message = new Message(['content' => $message]);
+
+        $message->channel()->associate($channel);
+
+        return $this->messages()->save($message);
+    }
+
+    /**
+     * It has many messages.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
 }
