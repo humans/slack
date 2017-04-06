@@ -1,16 +1,24 @@
 <?php
 
-Route::middleware('auth')->get('/', function () {
-    return view('welcome');
+Route::domain(env('APP_DOMAIN'))->group(function () {
+    Route::get('/', 'LandingPageController')->name('landing');
 });
 
-Route::resource('login', 'LoginController', [
-    'only' => ['create', 'store']
-]);
+// Multi-tenancy
+Route::domain('{team}.' . env('APP_DOMAIN'))->group(function () {
+    Route::resource('login', 'LoginController', [
+        'only' => ['create', 'store']
+    ]);
 
-Route::resource('register', 'RegisterController', [
-    'only' => ['create', 'store']
-]);
+    Route::resource('register', 'RegisterController', [
+        'only' => ['create', 'store']
+    ]);
 
-Route::get('/login', 'LoginController@create')->name('login.create');
-Route::get('/register', 'RegisterController@create')->name('register.create');
+    Route::get('/login', 'LoginController@create')->name('login.create');
+    Route::get('/register', 'RegisterController@create')->name('register.create');
+
+
+    Route::middleware('auth')->group(function () {
+        Route::get('/', 'HomeController')->name('home');
+    });
+});

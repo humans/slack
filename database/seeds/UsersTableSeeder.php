@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder
                 'username' => 'jaggy',
                 'name' => 'Jaggy Gauran',
                 'email' => 'i.am@jag.gy',
-                'password' => bcrypt('123456'),
+                'password' => '123456',
                 'team_id' => Team::first()->id,
             ]
         ];
