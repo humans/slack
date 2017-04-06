@@ -17,6 +17,8 @@ const app = new Vue({
     el: '#app',
 
     data: {
+        team: window.Laravel.team,
+
         channels: [],
         messages: [],
 
@@ -43,18 +45,18 @@ const app = new Vue({
                 .then(({ data }) => this.messages = data.latest_messages);
 
             window.Echo
-                .private(`channel.${channel.name}`)
+                .private(`${this.team}.channel.${channel.name}`)
                 .listen('MessageSent', ({ message }) => {
                     this.messages.push(message);
                 });
         },
 
         send () {
-            this.message = null;
-
             window.axios
                 .post(`/api/channels/${this.currentChannel.id}/messages`, { message: this.message })
                 .then(({ data }) => this.messages.push(data));
+
+            this.message = null;
         },
 
         refresh () {

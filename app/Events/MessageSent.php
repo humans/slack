@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Team;
 use App\Message;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;

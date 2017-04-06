@@ -53,7 +53,7 @@ class User extends Authenticatable
 
         $message->channel()->associate($channel);
 
-        return $this->messages()->save($message);
+        return $this->messages()->save($message)->load('user');
     }
 
     /**

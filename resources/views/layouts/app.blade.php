@@ -9,6 +9,7 @@
 
         <script>
          window.Laravel = {!! json_encode([
+           'team' => request()->route('team'),
            'csrfToken' => csrf_token(),
          ]) !!};
         </script>
