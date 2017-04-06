@@ -1,7 +1,7 @@
 
 /**
  * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
+ * includes Vue and 
  * building robust, powerful web applications using Vue and Laravel.
  */
 
@@ -16,5 +16,42 @@ require('./bootstrap');
 Vue.component('example', require('./components/Example.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+
+    data: {
+        channels: [],
+        messages: [],
+
+        message: null,
+        currentChannel: null,
+        subscription: null,
+    },
+
+    mounted () {
+        this.refresh();
+    },
+
+    methods: {
+        join (channel) {
+            this.currentChannel = channel;
+
+            this.subscription = window.Echo.channel(channel.name);
+        },
+
+        send () {
+            window.axios
+                .post(`/api/channels/${this.currentChannel.id}/messages`)
+                .then(({ data }) => {
+                    this.messages = this.messages.concat(data);
+                })
+
+            this.message = null;
+        },
+
+        refresh () {
+            window.axios
+                .get('/api/channels')
+                .then(({ data }) => this.channels = data);
+        },
+    },
 });
