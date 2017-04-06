@@ -8,7 +8,7 @@
         <title>Laravel</title>
 
         <script>
-         window.Laravel = {!! json_encode([
+         window.Slack = {!! json_encode([
            'team' => request()->route('team'),
            'csrfToken' => csrf_token(),
          ]) !!};

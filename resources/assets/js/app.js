@@ -1,72 +1,82 @@
+import Echo from 'laravel-echo'
+import Vue from 'vue';
+import axios from 'axios';
+import Pusher from 'pusher-js';
 
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and 
- * building robust, powerful web applications using Vue and Laravel.
- */
+Vue.use(require('vue-router'));
 
-require('./bootstrap');
+import router from './routes/router.js';
+import store from './vuex/store.js';
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+axios.defaults.headers.common = {
+    'X-CSRF-TOKEN': window.Slack.csrfToken,
+    'X-Requested-With': 'XMLHttpRequest',
+};
+
+Vue.prototype.$http = axios;
+Vue.prototype.$echo = new Echo({
+    broadcaster: 'pusher',
+    key: 'aedd54192305c7a81468',
+    cluster: 'ap1',
+});
 
 const app = new Vue({
-    el: '#app',
+  router,
+  store,
 
-    data: {
-        team: window.Laravel.team,
+  el: '#app',
 
-        channels: [],
-        messages: [],
+  data: {
+    team: window.Slack.team,
 
-        message: null,
-        currentChannel: null,
-        subscription: null,
+    channels: [],
+    messages: [],
+
+    message: null,
+    currentChannel: null,
+    subscription: null,
+  },
+
+  mounted () {
+    this.refresh();
+  },
+
+  methods: {
+    join (channel) {
+      if (this.currentChannel) {
+        this.$echo.leave(this.currentChannel.name);
+      }
+
+      this.messages = [];
+      this.currentChannel = channel;
+
+      this.$http
+        .get(`/api/channels/${this.currentChannel.id}`)
+        .then(({ data }) => this.messages = data.latest_messages);
+
+      this.$echo
+        .private(`${this.team}.channel.${channel.name}`)
+        .listen('MessageSent', ({ message }) => {
+          this.messages.push(message);
+        });
     },
 
-    mounted () {
-        this.refresh();
+    send () {
+      this.$http
+        .post(`/api/channels/${this.currentChannel.id}/messages`, { message: this.message })
+        .then(({ data }) => this.messages.push(data));
+
+      this.message = null;
     },
 
-    methods: {
-        join (channel) {
-            if (this.currentChannel) {
-                window.Echo.leave(this.currentChannel.name);
-            }
+    refresh () {
+      this.$http
+        .get('/api/channels')
+        .then(({ data }) => {
+          this.channels = data;
 
-            this.messages = [];
-            this.currentChannel = channel;
-
-            window.axios
-                .get(`/api/channels/${this.currentChannel.id}`)
-                .then(({ data }) => this.messages = data.latest_messages);
-
-            window.Echo
-                .private(`${this.team}.channel.${channel.name}`)
-                .listen('MessageSent', ({ message }) => {
-                    this.messages.push(message);
-                });
-        },
-
-        send () {
-            window.axios
-                .post(`/api/channels/${this.currentChannel.id}/messages`, { message: this.message })
-                .then(({ data }) => this.messages.push(data));
-
-            this.message = null;
-        },
-
-        refresh () {
-            window.axios
-                .get('/api/channels')
-                .then(({ data }) => {
-                    this.channels = data;
-
-                    this.join(data[0]);
-                });
-        },
+          this.join(data[0]);
+        });
     },
+  },
 });
