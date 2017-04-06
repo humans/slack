@@ -14,6 +14,7 @@ class TeamsTableSeeder extends Seeder
     {
         $teams = [
             ['name' => 'Artisan.ph', 'slug' => 'artisanph'],
+            ['name' => 'Wilderborn', 'slug' => 'wilderborn'],
         ];
 
         array_walk($teams, [Team::class, 'create']);

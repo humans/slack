@@ -16,5 +16,9 @@ class ChannelsTableSeeder extends Seeder
         array_walk($channels, function ($channel) {
             Channel::create($channel + ['team_id' => Team::first()->id]);
         });
+
+        array_walk($channels, function ($channel) {
+            Channel::create($channel + ['team_id' => Team::all()->last()->id]);
+        });
     }
 }

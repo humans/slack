@@ -34,4 +34,14 @@ class Team extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    /**
+     * It has many channels.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function channels()
+    {
+        return $this->hasMany(Channel::class);
+    }
 }
