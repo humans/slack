@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Seeder;
-
+use App\Team;
 use App\Channel;
+use Illuminate\Database\Seeder;
 
 class ChannelsTableSeeder extends Seeder
 {
@@ -13,6 +13,8 @@ class ChannelsTableSeeder extends Seeder
             ['name' => 'random'],
         ];
 
-        array_map([Channel::class, 'create'], $channels);
+        array_walk($channels, function ($channel) {
+            Channel::create($channel + ['team_id' => Team::first()->id]);
+        });
     }
 }

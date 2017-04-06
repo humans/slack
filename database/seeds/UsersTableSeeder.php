@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Seeder;
-
+use App\Team;
 use App\User;
+use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
 {
@@ -15,12 +15,14 @@ class UsersTableSeeder extends Seeder
     {
         $users = [
             [
+                'username' => 'jaggy',
                 'name' => 'Jaggy Gauran',
                 'email' => 'i.am@jag.gy',
                 'password' => bcrypt('123456'),
+                'team_id' => Team::first()->id,
             ]
         ];
 
-        array_map([User::class, 'create'], $users);
+        array_walk($users, [User::class, 'create']);
     }
 }
