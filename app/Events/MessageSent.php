@@ -28,22 +28,14 @@ class MessageSent implements ShouldBroadcast
     }
 
     /**
-     * Custom message key.
-     *
-     * @return string
-     */
-    public function broadcastAs()
-    {
-        return 'message.sent';
-    }
-
-    /**
      * Get the channels the event should broadcast on.
      *
      * @return Channel|array
      */
     public function broadcastOn()
     {
+        $this->message->load('user', 'channel');
+
         return new PrivateChannel('channel.' . $this->message->channel->name);
     }
 }

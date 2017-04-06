@@ -47,9 +47,3 @@ window.Echo = new Echo({
     key: 'aedd54192305c7a81468',
     cluster: 'ap1',
 });
-
-window.Echo
-    .private('channel.general')
-    .listen('message', (e) => {
-        console.error(e)
-    });

@@ -39,8 +39,7 @@ const app = new Vue({
 
             window.Echo
                 .private(`channel.${channel.name}`)
-                .listen('message.sent', ({ message }) => {
-                    console.error(message);
+                .listen('MessageSent', ({ message }) => {
                     this.messages.push(message);
                 });
         },

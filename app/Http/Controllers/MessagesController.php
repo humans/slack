@@ -21,8 +21,8 @@ class MessagesController extends Controller
             'user_id' => $request->user()->id,
         ]));
 
-        broadcast(new MessageSent($message->load('user')));
+        broadcast(new MessageSent($message))->toOthers();
 
-        return $message;
+        return $message->load('user');
     }
 }

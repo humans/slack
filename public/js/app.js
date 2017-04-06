@@ -997,10 +997,9 @@ var app = new Vue({
 
             this.currentChannel = channel;
 
-            window.Echo.private('channel.' + channel.name).listen('message.sent', function (_ref) {
+            window.Echo.private('channel.' + channel.name).listen('MessageSent', function (_ref) {
                 var message = _ref.message;
 
-                console.error(message);
                 _this.messages.push(message);
             });
         },
@@ -1933,10 +1932,6 @@ window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
   broadcaster: 'pusher',
   key: 'aedd54192305c7a81468',
   cluster: 'ap1'
-});
-
-window.Echo.private('channel.general').listen('message', function (e) {
-  console.error(e);
 });
 
 /***/ }),
