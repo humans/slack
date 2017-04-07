@@ -5,13 +5,13 @@ import Vue from 'vue';
 import Pusher from 'pusher-js';
 import AppView from './components/AppView';
 
-import router from './routes/router';
-import store from './vuex/store';
-
 axios.defaults.headers.common = {
     'X-CSRF-TOKEN': window.Slack.csrfToken,
     'X-Requested-With': 'XMLHttpRequest',
 };
+
+import router from './routes/router';
+import store from './vuex/store';
 
 Vue.prototype.$http = axios;
 Vue.prototype.$echo = new Echo({

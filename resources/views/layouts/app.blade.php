@@ -10,7 +10,9 @@
         <link href="/css/app.css" rel="stylesheet">
 
         <script>
-         window.Slack = {!! json_encode([
+         // We have to keep window.Laravel for now since Echo is being too clingy
+         // with the namespace they want. :<
+         window.Laravel = window.Slack = {!! json_encode([
            'team' => request()->route('team'),
            'csrfToken' => csrf_token(),
          ]) !!};
