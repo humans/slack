@@ -18,6 +18,10 @@ export default new Vuex.Store({
       state.messages.push(message);
     },
 
+    addChannel (state, channel) {
+      state.channels.push(channel);
+    },
+
     updateUserSettings (state, settings) {
       state.userSettings = settings;
     },
@@ -38,7 +42,7 @@ export default new Vuex.Store({
   actions: {
     selectChannel ({ commit, state }, channel) {
       if (state.currentChannel) {
-        echo.leave(state.currentChannel.name);
+        echo.leave('channel.' + state.currentChannel.name);
       }
 
       commit('selectChannel', channel);
@@ -50,6 +54,12 @@ export default new Vuex.Store({
         name: 'channel',
         params: { channel: channel.id },
       });
+    },
+
+    addChannel ({ dispatch, commit }, channel) {
+      commit('addChannel', channel);
+
+      dispatch('selectChannel', channel);
     },
   },
 });

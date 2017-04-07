@@ -3,7 +3,7 @@
 namespace App\Events;
 
 use App\Team;
-use App\Message;
+use App\Channel as EloquentChannel;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -12,35 +12,27 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class MessageSent implements ShouldBroadcast
+class ChannelCreated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
-     * The team.
+     * The channel we'll broadcast to those conencted.
      *
-     * @var Team
+     * @var EloquentChannel
      */
-    private $team;
-
-    /**
-     * The message we'll broadcast to those conencted.
-     *
-     * @var Message
-     */
-    public $message;
+    public $channel;
 
     /**
      * Create a new event instance.
      *
      * @param  Team  $team
-     * @param  Message  $message
-     * @return MessageSent
+     * @param  EloquentChannel  $channel
+     * @return void
      */
-    public function __construct(Team $team, Message $message)
+    public function __construct(EloquentChannel $channel)
     {
-        $this->team = $team;
-        $this->message = $message;
+        $this->channel = $channel;
     }
 
     /**
@@ -50,11 +42,8 @@ class MessageSent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        // We have to load this so serialization will work.
-        $this->message->load('user', 'channel');
-
         return new PrivateChannel(
-            $this->team->slug . '.channel.' . $this->message->channel->name
+            $this->channel->team->slug . '.channel'
         );
     }
 }

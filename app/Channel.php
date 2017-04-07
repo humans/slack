@@ -33,4 +33,14 @@ class Channel extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+    /**
+     * It belongs to a team.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
 }

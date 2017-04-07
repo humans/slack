@@ -51,7 +51,7 @@
 
       subscribe () {
         this.$echo
-          .private(this.currentChannel.name)
+          .private('channel.' + this.currentChannel.name)
           .listen('MessageSent', ({ message }) => this.addMessage(message));
       },
     },
