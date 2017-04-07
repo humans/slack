@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Team;
 use App\Channel;
-use App\Events\MessageSent;
 use Illuminate\Http\Request;
 
 class ChannelMessagesController extends Controller
@@ -19,13 +18,7 @@ class ChannelMessagesController extends Controller
      */
     public function store(Request $request, Team $team, $channel)
     {
-        $message = $request->user()->sendMessage(
-            Channel::find($channel),
-            $request->message
-        );
-
-        broadcast(new MessageSent($team, $message))->toOthers();
-
-        return $message;
+        return $request->user()
+            ->sendMessage(Channel::find($channel), $request->message);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Events\ChannelCreated;
+
 class Team extends Model
 {
     /**
@@ -66,7 +68,11 @@ class Team extends Model
      */
     public function addChannel(array $attributes)
     {
-        return $this->channels()->save(new Channel($attributes));
+        $channel = $this->channels()->save(new Channel($attributes));
+
+        broadcast(new ChannelCreated($channel))->toOthers();
+
+        return $channel;
     }
 
     /**

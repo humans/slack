@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Team;
 use App\Channel;
-use App\Events\ChannelCreated;
 use Illuminate\Http\Request;
 
 class ChannelsController extends Controller
@@ -40,10 +39,6 @@ class ChannelsController extends Controller
      */
     public function store(Request $request, Team $team)
     {
-        $channel = $team->addChannel($request->only('name', 'description'));
-
-        broadcast(new ChannelCreated($channel))->toOthers();
-
-        return $channel;
+        return $team->addChannel($request->only('name', 'description'));
     }
 }

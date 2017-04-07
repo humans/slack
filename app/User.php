@@ -3,6 +3,7 @@
 namespace App;
 
 use Laravel\Passport\HasApiTokens;
+use App\Events\MessageSent;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -57,7 +58,11 @@ class User extends Authenticatable
 
         $message->channel()->associate($channel);
 
-        return $this->messages()->save($message)->load('user');
+        $message = $this->messages()->save($message)->load('user');
+
+        broadcast(new MessageSent($message))->toOthers();
+
+        return $message;
     }
 
     /**

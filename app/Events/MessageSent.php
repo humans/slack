@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-use App\Team;
 use App\Message;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
@@ -17,13 +16,6 @@ class MessageSent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
-     * The team.
-     *
-     * @var Team
-     */
-    private $team;
-
-    /**
      * The message we'll broadcast to those conencted.
      *
      * @var Message
@@ -33,13 +25,11 @@ class MessageSent implements ShouldBroadcast
     /**
      * Create a new event instance.
      *
-     * @param  Team  $team
      * @param  Message  $message
      * @return MessageSent
      */
-    public function __construct(Team $team, Message $message)
+    public function __construct(Message $message)
     {
-        $this->team = $team;
         $this->message = $message;
     }
 
@@ -54,7 +44,7 @@ class MessageSent implements ShouldBroadcast
         $this->message->load('user', 'channel');
 
         return new PrivateChannel(
-            $this->team->slug . '.channel.' . $this->message->channel->name
+            $this->message->user->team->slug . '.channel.' . $this->message->channel->name
         );
     }
 }

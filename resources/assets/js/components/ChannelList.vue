@@ -45,12 +45,10 @@
       },
 
       createChannel (data) {
-        this.$http.post(`/api/channels`, data)
-          .then(({ data }) => {
-            this.create = false;
+        this.create = false;
 
-            this.addAndJoinChannel(data);
-          });
+        this.$http.post(`/api/channels`, data)
+          .then(({ data }) => this.addAndJoinChannel(data));
       },
     },
   }
