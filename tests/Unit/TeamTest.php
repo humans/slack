@@ -66,4 +66,20 @@ class TeamTest extends TestCase
             return $channel->name === 'random';
         }));
     }
+
+    /** @test **/
+    function return_the_default_channels_the_user_will_be_registered_to()
+    {
+        $team = factory(Team::class)->create();
+
+        $channels = $team->defaultChannels();
+
+        $this->assertTrue($channels->contains(function ($channel) {
+            return $channel->name === 'general';
+        }));
+
+        $this->assertTrue($channels->contains(function ($channel) {
+            return $channel->name === 'random';
+        }));
+    }
 }

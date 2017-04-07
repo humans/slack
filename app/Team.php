@@ -5,6 +5,13 @@ namespace App;
 class Team extends Model
 {
     /**
+     * The channels to be created when a new team is made.
+     *
+     * @var array
+     */
+    protected $defaultChannels = ['general', 'random'];
+
+    /**
      * Boot the model.
      *
      * @return void
@@ -12,21 +19,32 @@ class Team extends Model
     public static function boot()
     {
         static::created(function (self $team) {
-            $team->configureDefaultChannels();
+            $team->configure();
         });
     }
 
     /**
-     * Configure the default channels.
+     * Configure the team channels.
      *
      * @return void
      */
-    public function configureDefaultChannels()
+    public function configure()
     {
-        $this->channels()->saveMany([
-            new Channel(['name' => 'general']),
-            new Channel(['name' => 'random']),
-        ]);
+        $channels = array_map(function ($channel) {
+            return new Channel(['name' => $channel]);
+        }, $this->defaultChannels);
+
+        $this->channels()->saveMany($channels);
+    }
+
+    /**
+     * The default channels we'll register the user into.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function defaultChannels()
+    {
+        return $this->channels()->whereIn('name', $this->defaultChannels)->get();
     }
 
     /**

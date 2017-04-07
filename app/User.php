@@ -40,7 +40,7 @@ class User extends Authenticatable
         });
 
         static::created(function (self $user) {
-            $user->configureDefaultSettings();
+            $user->configure();
         });
     }
 
@@ -65,8 +65,10 @@ class User extends Authenticatable
      *
      * @return void
      */
-    public function configureDefaultSettings()
+    public function configure()
     {
+        $this->channels()->attach($this->team->defaultChannels()->pluck('id'));
+
         $settings = new UserSettings;
 
         $settings->activeChannel()->associate($this->team->channels()->first());
@@ -102,5 +104,15 @@ class User extends Authenticatable
     public function team()
     {
         return $this->belongsTo(Team::class);
+    }
+
+    /**
+     * It has and belongs to many channels.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function channels()
+    {
+        return $this->belongsToMany(Channel::class);
     }
 }

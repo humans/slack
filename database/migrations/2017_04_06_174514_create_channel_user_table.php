@@ -16,8 +16,8 @@ class CreateChannelUserTable extends Migration
         Schema::create('channel_user', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('team_id')->unsigned();
-            $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade');
+            $table->integer('channel_id')->unsigned();
+            $table->foreign('channel_id')->references('id')->on('channels')->onDelete('cascade');
 
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

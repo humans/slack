@@ -13,4 +13,14 @@ class Channel extends Model
     {
         return $this->hasMany(Message::class)->limit(5);
     }
+
+    /**
+     * It has and belongs to many users.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

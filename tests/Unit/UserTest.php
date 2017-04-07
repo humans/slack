@@ -39,6 +39,20 @@ class UserTest extends TestCase
     }
 
     /** @test **/
+    function join_in_general_and_random_after_registering()
+    {
+        $user = factory(User::class)->create();
+
+        $this->assertTrue($user->channels->contains(function ($channel) {
+            return $channel->name === 'general';
+        }));
+
+        $this->assertTrue($user->channels->contains(function ($channel) {
+            return $channel->name === 'random';
+        }));
+    }
+
+    /** @test **/
     function set_the_latest_channel_accessed_as_general_when_the_user_is_new()
     {
         $user = factory(User::class)->create();
