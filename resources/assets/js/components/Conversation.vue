@@ -19,7 +19,7 @@
     },
 
     mounted () {
-      this.fetchChannelMessages();
+      this.refresh();
     },
 
     watch: {
@@ -31,27 +31,27 @@
     methods: {
       ...mapMutations(['selectChannel', 'addMessage', 'updateMessages']),
 
-      fetchChannelMessages () {
-        if (this.currentChannel) {
-          console.error('Disconnecting from ' + this.team + '.channel.' + this.currentChannel.name);
-          this.$echo.leave(this.team + '.channel.' + this.currentChannel.name);
-        }
-
+      refresh () {
         this.$http.get(`/api/channels/${this.$route.params.channel}`)
           .then(({ data }) => {
             this.selectChannel(data);
 
             this.updateMessages(data.latest_messages);
-
+        
             this.subscribe();
           });
+      },
+
+      fetchChannelMessages () {
+        this.$http.get(`/api/channels/${this.currentChannel.id}`)
+          .then(({ data }) => this.updateMessages(data.latest_messages));
         
+        this.subscribe();
       },
 
       subscribe () {
-        console.error('Connecting to ' + this.team + '.channel.' + this.currentChannel.name);
         this.$echo
-          .private('artisanph.channel.general')
+          .private(this.currentChannel.name)
           .listen('MessageSent', ({ message }) => this.addMessage(message));
       },
     },

@@ -36,9 +36,13 @@ export default new Vuex.Store({
   },
 
   actions: {
-    selectChannel (context, channel) {
-      context.commit('selectChannel', channel);
-      context.commit('updateMessages', []);
+    selectChannel ({ commit, state }, channel) {
+      if (state.currentChannel) {
+        echo.leave(state.currentChannel.name);
+      }
+
+      commit('selectChannel', channel);
+      commit('updateMessages', []);
 
       axios.patch(`/api/user/settings/active_channel/${channel.id}`);
 
