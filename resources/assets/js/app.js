@@ -1,72 +1,33 @@
+import axios from 'axios';
+import Echo from 'laravel-echo'
+import VueRouter from 'vue-router';
+import Vue from 'vue';
+import Pusher from 'pusher-js';
+import AppView from './components/AppView';
 
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and 
- * building robust, powerful web applications using Vue and Laravel.
- */
+import router from './routes/router';
+import store from './vuex/store';
 
-require('./bootstrap');
+axios.defaults.headers.common = {
+    'X-CSRF-TOKEN': window.Slack.csrfToken,
+    'X-Requested-With': 'XMLHttpRequest',
+};
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+Vue.prototype.$http = axios;
+Vue.prototype.$echo = new Echo({
+    broadcaster: 'pusher',
+    key: 'aedd54192305c7a81468',
+    cluster: 'ap1',
+});
+
+Vue.component('sidebar', require('./components/Sidebar'));
+Vue.component('conversation', require('./components/Conversation'));
+Vue.component('chatbox', require('./components/Chatbox'));
 
 const app = new Vue({
-    el: '#app',
-
-    data: {
-        team: window.Laravel.team,
-
-        channels: [],
-        messages: [],
-
-        message: null,
-        currentChannel: null,
-        subscription: null,
-    },
-
-    mounted () {
-        this.refresh();
-    },
-
-    methods: {
-        join (channel) {
-            if (this.currentChannel) {
-                window.Echo.leave(this.currentChannel.name);
-            }
-
-            this.messages = [];
-            this.currentChannel = channel;
-
-            window.axios
-                .get(`/api/channels/${this.currentChannel.id}`)
-                .then(({ data }) => this.messages = data.latest_messages);
-
-            window.Echo
-                .private(`${this.team}.channel.${channel.name}`)
-                .listen('MessageSent', ({ message }) => {
-                    this.messages.push(message);
-                });
-        },
-
-        send () {
-            window.axios
-                .post(`/api/channels/${this.currentChannel.id}/messages`, { message: this.message })
-                .then(({ data }) => this.messages.push(data));
-
-            this.message = null;
-        },
-
-        refresh () {
-            window.axios
-                .get('/api/channels')
-                .then(({ data }) => {
-                    this.channels = data;
-
-                    this.join(data[0]);
-                });
-        },
-    },
+  router,
+  store,
+  render: createElement => createElement(AppView),
 });
+
+app.$mount('#app');

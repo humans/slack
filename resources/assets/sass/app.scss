@@ -1,9 +1,17 @@
+* {
+    margin: 0;
+    padding: 0;
+}
 
-// Fonts
-@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+*, *:before, *:after {
+    box-sizing: border-box;
+}
 
-// Variables
-@import "variables";
+html, body, #app {
+    height: 100%;
+    width: 100%;
+}
 
-// Bootstrap
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+html, body {
+    font-size: 16px;
+}

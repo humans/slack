@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class ChannelMessagesController extends Controller
 {
     /**
-     * Store the message.
+     * Send the message in the channel.
      *
      * @param  Request  $request
      * @param  Team  $team
