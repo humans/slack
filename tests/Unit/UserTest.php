@@ -57,11 +57,6 @@ class UserTest extends TestCase
     {
         $user = factory(User::class)->create();
 
-        factory(\App\Channel::class)->create([
-            'name' => 'projects',
-            'team_id' => $user->team->id,
-        ]);
-
-        // $this->assertEquals('projects', $user->settings->activeChannel->name);
+        $this->assertEquals('general', $user->settings->activeChannel->name);
     }
 }

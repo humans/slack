@@ -21,7 +21,9 @@ class CreateChannelsTable extends Migration
 
             $table->string('name');
             $table->string('description')->nullable();
+            $table->boolean('is_private')->default(false);
 
+            $table->datetime('archived_at')->nullable();
             $table->timestamps();
         });
     }
