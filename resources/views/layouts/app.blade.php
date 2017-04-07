@@ -7,6 +7,8 @@
 
         <title>Laravel</title>
 
+        <link href="/css/app.css" rel="stylesheet">
+
         <script>
          window.Slack = {!! json_encode([
            'team' => request()->route('team'),

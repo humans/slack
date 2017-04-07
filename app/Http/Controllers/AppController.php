@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-class HomeController extends Controller
+class AppController extends Controller
 {
     /**
      * Display the home page.
