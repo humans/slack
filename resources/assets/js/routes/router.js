@@ -8,7 +8,7 @@ export default new VueRouter({
     mode: 'history',
 
     routes: [
-      { path: '/', component: Conversation },
+      { path: '/' },
       { path: '/messages/:channel', name: 'channel', component: Conversation }
     ]
 });

@@ -19,7 +19,7 @@
     },
 
     mounted () {
-      this.refresh();
+      this.fetchChannelMessage();
     },
 
     watch: {
@@ -35,7 +35,10 @@
         this.$http.get(`/api/channels/${this.$route.params.channel}`)
           .then(({ data }) => {
             this.selectChannel(data);
+
             this.updateMessages(data.latest_messages);
+
+            this.subscribe();
           });
       },
 
@@ -51,14 +54,11 @@
       },
 
       subscribe () {
-        try {
-          // this.$echo
-            // .private(`${this.team}.channel.${this.currentChannel.name}`)
-            // .listen('MessageSent', ({ message }) => this.addMessage(message));
-        } catch (error) {
-          // This does a weird login which everything still works,
-          // I just don't want any errors to be thrown.
-        }
+        console.error('subscribing');
+        console.error(`${this.team}.channel.${this.currentChannel.name}`);
+        this.$echo
+          .private(`${this.team}.channel.${this.currentChannel.name}`)
+          .listen('MessageSent', ({ message }) => this.addMessage(message));
       },
     },
   };

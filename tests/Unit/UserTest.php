@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -27,5 +28,26 @@ class UserTest extends TestCase
         $user->sendMessage($channel, 'Hello World!');
 
         $this->assertCount(1, \App\Message::all());
+    }
+
+    /** @test **/
+    function create_some_settings_when_the_user_is_created()
+    {
+        $user = factory(User::class)->create();
+
+        $this->assertCount(1, \App\UserSettings::all());
+    }
+
+    /** @test **/
+    function set_the_latest_channel_accessed_as_general_when_the_user_is_new()
+    {
+        $user = factory(User::class)->create();
+
+        factory(\App\Channel::class)->create([
+            'name' => 'projects',
+            'team_id' => $user->team->id,
+        ]);
+
+        // $this->assertEquals('projects', $user->settings->activeChannel->name);
     }
 }

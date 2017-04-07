@@ -31,8 +31,8 @@ export default new Vuex.Store({
 
   actions: {
     selectChannel (context, channel) {
-      context.commit('updateMessages', []);
       context.commit('selectChannel', channel);
+      context.commit('updateMessages', []);
 
       router.push({
         name: 'channel',

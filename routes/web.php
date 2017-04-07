@@ -19,7 +19,7 @@ Route::domain('{team}.' . env('APP_DOMAIN'))->group(function () {
 
 
     Route::middleware('auth')->group(function () {
-        Route::get('/', 'AppController')->name('app');
+        Route::get('/', 'AppController')->name('home');
         Route::get('/messages/{channel}', 'AppController')->name('app');
     });
 });

@@ -5,6 +5,31 @@ namespace App;
 class Team extends Model
 {
     /**
+     * Boot the model.
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        static::created(function (self $team) {
+            $team->configureDefaultChannels();
+        });
+    }
+
+    /**
+     * Configure the default channels.
+     *
+     * @return void
+     */
+    public function configureDefaultChannels()
+    {
+        $this->channels()->saveMany([
+            new Channel(['name' => 'general']),
+            new Channel(['name' => 'random']),
+        ]);
+    }
+
+    /**
      * Register the user under the team.
      *
      * @param  array  $attributes

@@ -36,7 +36,9 @@ class TeamTest extends TestCase
             'description' => 'WE ACTUALLY HAVE PROJECTS',
         ]);
 
-        $this->assertCount(1, \App\Channel::all());
+        $this->assertTrue($team->channels->contains(function ($channel) {
+            return $channel->name === 'projects';
+        }));
     }
 
     /** @test **/
@@ -49,5 +51,19 @@ class TeamTest extends TestCase
         $channel = $team->channel('projects');
 
         $this->assertEquals('projects', $channel->name);
+    }
+
+    /** @test **/
+    function create_general_and_random_as_the_default_channels()
+    {
+        $team = factory(Team::class)->create();
+
+        $this->assertTrue($team->channels->contains(function ($channel) {
+            return $channel->name === 'general';
+        }));
+
+        $this->assertTrue($team->channels->contains(function ($channel) {
+            return $channel->name === 'random';
+        }));
     }
 }

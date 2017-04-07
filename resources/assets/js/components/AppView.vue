@@ -15,19 +15,17 @@
 
   export default {
     mounted () {
-      this.refresh();
+      this.fetchChannels();
     },
 
     methods: {
       ...mapMutations(['updateChannels']),
       ...mapActions(['selectChannel']),
 
-      refresh () {
+      fetchChannels () {
         this.$http.get('/api/channels')
           .then(({ data }) => {
             this.updateChannels(data);
-
-            this.selectChannel(data[0]);
           });
       },
     },

@@ -38,6 +38,10 @@ class User extends Authenticatable
                 $user->password = bcrypt($user->password);
             }
         });
+
+        static::created(function (self $user) {
+            $user->configureDefaultSettings();
+        });
     }
 
     /**
@@ -57,6 +61,30 @@ class User extends Authenticatable
     }
 
     /**
+     * Set up the user's configuration.
+     *
+     * @return void
+     */
+    public function configureDefaultSettings()
+    {
+        $settings = new UserSettings;
+
+        $settings->activeChannel()->associate($this->team->channels()->first());
+
+        $this->settings()->save($settings);
+    }
+
+    /**
+     * It has settings.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function settings()
+    {
+        return $this->hasOne(UserSettings::class);
+    }
+
+    /**
      * It has many messages.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -64,5 +92,15 @@ class User extends Authenticatable
     public function messages()
     {
         return $this->hasMany(Message::class);
+    }
+
+    /**
+     * It belongs to a team.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
     }
 }
