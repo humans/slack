@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import axios from 'axios';
 import Vue from 'vue';
 import Vuex from 'vuex';
@@ -30,6 +31,8 @@ export default new Vuex.Store({
 
     addChannel (state, channel) {
       state.channels.push(channel);
+
+      state.channels = _.orderBy(state.channels, 'name');
     },
 
     updateUserSettings (state, settings) {
@@ -38,6 +41,8 @@ export default new Vuex.Store({
 
     updateMessages (state, messages) {
       state.messages = messages;
+
+      state.messages = _.orderBy(state.messages, 'created_at');
     },
 
     updateChannels (state, channels) {

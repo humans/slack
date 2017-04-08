@@ -21,7 +21,7 @@ class Channel extends Model
      */
     public function latestMessages()
     {
-        return $this->hasMany(Message::class)->limit(5);
+        return $this->hasMany(Message::class)->limit(20)->orderBy('created_at', 'DESC');
     }
 
     /**

@@ -126,6 +126,6 @@ class Team extends Model
      */
     public function channels()
     {
-        return $this->hasMany(Channel::class);
+        return $this->hasMany(Channel::class)->orderBy('name', 'ASC');
     }
 }
