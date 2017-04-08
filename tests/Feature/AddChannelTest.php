@@ -5,7 +5,9 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use App\Team;
 use App\Channel;
+use App\User;
 use App\Events\ChannelCreated;
+use Laravel\Passport\Passport;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -26,6 +28,11 @@ class AddChannelTest extends TestCase
     function add_a_new_channel_and_broadcast_the_event()
     {
         $team = factory(Team::class)->create();
+
+        Passport::actingAs(
+            factory(User::class)->create(['team_id' => $team->id]),
+            ['create-channel']
+        );
 
         $this->assertFalse(Channel::whereName('projects')->exists());
 

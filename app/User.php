@@ -112,7 +112,7 @@ class User extends Authenticatable
     }
 
     /**
-     * It has and belongs to many channels.
+     * These are all the channels the user belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */

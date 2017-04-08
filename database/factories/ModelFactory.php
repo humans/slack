@@ -10,9 +10,17 @@ $factory->define(App\Team::class, function (Faker\Generator $faker) {
 $factory->define(App\Channel::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->word,
+        'description' => $faker->sentence,
+        'is_private' => false,
         'team_id' => function () {
             return factory(App\Team::class)->create()->id;
         },
+    ];
+});
+
+$factory->state(App\Channel::class, 'private', function (Faker\Generator $faker) {
+    return [
+        'is_private' => true
     ];
 });
 

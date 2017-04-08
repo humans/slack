@@ -10,7 +10,8 @@ use App\Http\Requests\CreateChannelRequest;
 class ChannelsController extends Controller
 {
     /**
-     * Return all the channels under the team.
+     * Return all the public channels and all the private channels 
+     * the user belongs to.
      *
      * @param  Request  $request
      * @param  Team  $team
@@ -41,6 +42,10 @@ class ChannelsController extends Controller
      */
     public function store(CreateChannelRequest $request, Team $team)
     {
-        return $team->addChannel($request->only('name', 'description'));
+        $channel = $team->addChannel($request->only('name', 'description'));
+
+        $channel->addUser($request->user());
+
+        return $channel;
     }
 }

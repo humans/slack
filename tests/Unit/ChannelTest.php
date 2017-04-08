@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
+use App\Team;
 use App\User;
 use App\Channel;
 use Illuminate\Support\Facades\Event;
@@ -34,5 +35,18 @@ class ChannelTest extends TestCase
         $this->assertTrue($channel->users()->get()->contains(function ($user) {
             return $user->username === 'jaggy';
         }));
+    }
+
+    /** @test **/
+    function return_all_the_public_channels()
+    {
+        Event::fake();
+
+        $team = factory(Team::class)->create();
+
+        factory(Channel::class)->times(2)->create(['team_id' => $team->id]);
+        factory(Channel::class)->states('private')->create(['team_id' => $team->id]);
+
+        $this->assertCount(2, Channel::public()->get());
     }
 }

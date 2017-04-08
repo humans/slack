@@ -2,8 +2,21 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
+
 class Channel extends Model
 {
+    /**
+     * Return all the public channels.
+     *
+     * @param  Builder  $builder
+     * @return Builder
+     */
+    public function scopePublic(Builder $query)
+    {
+        return $query->where('is_private', false);
+    }
+
     /**
      * Add a user to the channel.
      *
