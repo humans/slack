@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\User;
 use Tests\TestCase;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -15,6 +16,8 @@ class UserTest extends TestCase
     /** @test **/
     function send_a_message_to_a_channel()
     {
+        Event::fake();
+
         $team = factory(\App\Team::class)->create();
 
         $channel = $team->addChannel(['name' => 'projects']);
