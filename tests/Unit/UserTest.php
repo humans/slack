@@ -2,6 +2,8 @@
 
 namespace Tests\Unit;
 
+use App\Channel;
+use App\Team;
 use App\User;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Event;
@@ -61,5 +63,25 @@ class UserTest extends TestCase
         $user = factory(User::class)->create();
 
         $this->assertEquals('general', $user->settings->activeChannel->name);
+    }
+
+    /** @test **/
+    function join_a_channel()
+    {
+        Event::fake();
+
+        $team = factory(Team::class)->create();
+        $user = factory(User::class)->create(['team_id' => $team->id]);
+
+        $general = factory(Channel::class)->create([
+            'name' => 'general',
+            'team_id' => $team->id,
+        ]);
+
+        $user->joinChannel($general);
+
+        $this->assertTrue($user->fresh()->channels->contains(function ($channel) {
+            return $channel->name === 'general';
+        }));
     }
 }

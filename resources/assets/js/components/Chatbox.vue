@@ -49,7 +49,7 @@ export default {
 }
 
 .chatbox-field {
-    border-radius: 3px;
+    border-radius: 7px;
     border: 2px solid #bbbdbf;
     height: 2.75rem;
 }
@@ -58,6 +58,7 @@ export default {
     height: 100%;
     width: 100%;
 
+    background-color: transparent;
     border: none;
     font-size: 1rem;
     font-family: 'Lato', sans-serif;

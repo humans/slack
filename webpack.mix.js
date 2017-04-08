@@ -11,5 +11,8 @@ const { mix } = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+mix
+  .options({ extractVueStyles: true })
+  .browserSync('artisanph.slack.dev')
+  .js('resources/assets/js/app.js', 'public/js')
+  .sass('resources/assets/sass/app.scss', 'public/css');

@@ -18,6 +18,17 @@ class Channel extends Model
     }
 
     /**
+     * Return all the private channels.
+     *
+     * @param  Builder  $builder
+     * @return Builder
+     */
+    public function scopePrivate(Builder $query)
+    {
+        return $query->where('is_private', true);
+    }
+
+    /**
      * Add a user to the channel.
      *
      * @return void

@@ -66,6 +66,17 @@ class User extends Authenticatable
     }
 
     /**
+     * Join a channel.
+     *
+     * @param  Channel  $channel
+     * @return void
+     */
+    public function joinChannel(Channel $channel)
+    {
+        $this->channels()->attach($channel);
+    }
+
+    /**
      * Set up the user's configuration.
      *
      * @return void
@@ -118,6 +129,6 @@ class User extends Authenticatable
      */
     public function channels()
     {
-        return $this->belongsToMany(Channel::class);
+        return $this->belongsToMany(Channel::class)->orderBy('name');
     }
 }

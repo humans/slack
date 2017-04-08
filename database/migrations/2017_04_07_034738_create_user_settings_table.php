@@ -20,7 +20,7 @@ class CreateUserSettingsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->integer('active_channel_id')->unsigned()->nullable();
-            $table->foreign('active_channel_id')->references('id')->on('channels')->onDelete('cascade');
+            $table->foreign('active_channel_id')->references('id')->on('channels')->onDelete('set null');
 
             $table->timestamps();
         });
