@@ -30,7 +30,7 @@ class LoginController extends Controller
     {
         $credentials = $this->credentials($request, $team);
 
-        if (! Auth::attempt($credentials)) {
+        if (! Auth::attempt($credentials, $remeber = true)) {
             return redirect()->back();
         }
 
