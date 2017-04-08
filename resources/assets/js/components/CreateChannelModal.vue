@@ -25,19 +25,26 @@
 </template>
 
 <script>
-  export default {
-    props: ['errors'],
+  import { mapActions } from 'vuex';
 
+  export default {
     data () {
       return {
         name: null,
         description: null,
+        errors: {},
       };
     },
 
     methods: {
+      ...mapActions(['addChannel']),
+
       submit () {
-        this.$emit('submit', this.$data);
+        this.$http.post('/api/channels', this.$data)
+          .then(({ data }) => this.addChannel(data))
+          .catch((error) => {
+            this.errors = error.response.data;
+          });
       },
 
       hasErrors (field) {
@@ -48,5 +55,16 @@
         return this.errors[field][0];
       },
     },
-  }
+  };
 </script>
+
+<style>
+  .modal {
+    background-color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+</style>

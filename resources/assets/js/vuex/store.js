@@ -7,6 +7,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    modal: null,
+
     channels: [],
     messages: [],
     userSettings: null,
@@ -14,6 +16,14 @@ export default new Vuex.Store({
   },
 
   mutations: {
+    openModal (state, component) {
+      state.modal = component;
+    },
+
+    closeModal (state) {
+      state.modal = null;
+    },
+
     addMessage (state, message) {
       state.messages.push(message);
     },
@@ -47,6 +57,7 @@ export default new Vuex.Store({
 
       commit('selectChannel', channel);
       commit('updateMessages', []);
+      commit('closeModal');
 
       axios.patch(`/api/user/settings/active_channel/${channel.id}`);
 

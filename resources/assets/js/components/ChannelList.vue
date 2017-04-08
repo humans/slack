@@ -1,68 +1,41 @@
 <template>
     <nav class="channel-list">
+        <header>
+            <h3>Channels</h3>
+
+            <a href="#" @click.prevent="openModal('create-channel-modal')">
+                Create a new channel.
+            </a>
+        </header>
+
         <ul>
             <li v-for="channel in channels">
                 <a href="#" @click.prevent="selectChannel(channel)">
                     {{ channel.name }}
                 </a>
             </li>
-
-            <li><a href="#" @click.prevent="create.open = true">Create a new channel.</a></li>
         </ul>
-
-        <create-channel
-            v-if="create.open"
-            @submit="createChannel"
-            :errors="create.errors">
-        </create-channel>
     </nav>
 </template>
 
 <script>
-  import CreateChannel from './CreateChannel.vue';
   import { mapState, mapMutations, mapActions } from 'vuex';
 
   export default {
-    components: { CreateChannel },
-
     computed: mapState(['channels']),
-
-    data () {
-      return {
-        create: {
-          open: false,
-          errors: {},
-        },
-      };
-    },
 
     mounted () {
       this.subscribe();
     },
 
     methods: {
-      ...mapMutations(['addChannel']),
-      ...mapActions({
-        selectChannel: 'selectChannel',
-        addAndJoinChannel: 'addChannel',
-      }),
+      ...mapMutations(['addChannel', 'openModal']),
+      ...mapActions(['selectChannel']),
 
       subscribe () {
         this.$echo
           .private('channel')
           .listen('ChannelCreated', (e) => this.addChannel(e.channel));
-      },
-
-      createChannel (data) {
-        this.$http.post(`/api/channels`, data)
-          .then(({ data }) => {
-            this.create = false;
-
-            this.addAndJoinChannel(data);
-          })
-          .catch((error) => {
-            this.create.errors = error.response.data;
-          });
       },
     },
   }

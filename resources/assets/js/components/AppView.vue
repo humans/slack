@@ -7,14 +7,23 @@
 
             <chatbox></chatbox>
         </section>
+
+        <!-- Modal -->
+        <component v-if="modal" :is="modal"></component>
     </main>
 </template>
 
 <script>
+  import Conversation from './Conversation.vue';
+  import Chatbox from './Chatbox.vue';
+  import CreateChannelModal from './CreateChannelModal.vue';
+  import Sidebar from './Sidebar.vue';
   import { mapState, mapActions, mapMutations } from 'vuex';
 
   export default {
-    computed: mapState(['userSettings']),
+    components: { Sidebar, Conversation, Chatbox, CreateChannelModal },
+
+    computed: mapState(['modal', 'userSettings']),
 
     mounted () {
       this.fetchUserSettings();
