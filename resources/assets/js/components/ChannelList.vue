@@ -7,10 +7,14 @@
                 </a>
             </li>
 
-            <li><a href="#" @click="create = true">Create a new channel.</a></li>
+            <li><a href="#" @click.prevent="create.open = true">Create a new channel.</a></li>
         </ul>
 
-        <create-channel v-if="create" @submit="createChannel"></create-channel>
+        <create-channel
+            v-if="create.open"
+            @submit="createChannel"
+            :errors="create.errors">
+        </create-channel>
     </nav>
 </template>
 
@@ -24,7 +28,12 @@
     computed: mapState(['channels']),
 
     data () {
-      return { create: false };
+      return {
+        create: {
+          open: false,
+          errors: {},
+        },
+      };
     },
 
     mounted () {
@@ -45,10 +54,15 @@
       },
 
       createChannel (data) {
-        this.create = false;
-
         this.$http.post(`/api/channels`, data)
-          .then(({ data }) => this.addAndJoinChannel(data));
+          .then(({ data }) => {
+            this.create = false;
+
+            this.addAndJoinChannel(data);
+          })
+          .catch((error) => {
+            this.create.errors = error.response.data;
+          });
       },
     },
   }
