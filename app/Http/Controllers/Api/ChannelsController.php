@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Team;
 use App\Channel;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 
 class ChannelsController extends Controller
@@ -39,6 +40,12 @@ class ChannelsController extends Controller
      */
     public function store(Request $request, Team $team)
     {
+        $this->validate($request, [
+            'name' => Rule::unique('channels')->where(function ($query) use ($team) {
+                $query->where('team_id', $team->id);
+            }),
+        ]);
+
         return $team->addChannel($request->only('name', 'description'));
     }
 }
