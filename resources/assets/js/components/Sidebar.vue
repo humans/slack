@@ -13,10 +13,15 @@
 </script>
 
 <style>
-  .sidebar {
-      background: #2b626b;
-      height: 100%;
-      width: 230px;
-  }
+.sidebar {
+    background: var(--sidebar-background);
+    color: var(--sidebar-color-root);
+    height: 100%;
+    width: 220px;
+}
+
+.sidebar a {
+    color: var(--sidebar-color-root);
+}
 </style>
 

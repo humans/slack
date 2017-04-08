@@ -1,17 +1,20 @@
 <template>
     <div class="conversation">
-        <ul>
-            <li v-for="message in messages">
-                <strong>{{ message.user.username }}</strong>: {{ message.content }}
-            </li>
-        </ul>
+        <message
+            v-for="message in messages"
+            :key="message.id"
+            :message="message">
+        </message>
     </div>
 </template>
 
 <script>
-  import { mapState, mapMutations } from 'vuex';
+  import Message from './Message.vue';
+  import { mapState, mapMutations, mapActions } from 'vuex';
 
   export default {
+    components: { Message },
+
     computed: mapState(['messages', 'currentChannel']),
 
     data () {
@@ -24,36 +27,27 @@
 
     watch: {
       '$route' (route) {
-        this.fetchChannelMessages();
+        this.refresh();
       },
     },
 
     methods: {
-      ...mapMutations(['selectChannel', 'addMessage', 'updateMessages']),
+      ...mapActions(['selectChannel']),
+      ...mapMutations(['addMessage', 'updateMessages']),
 
       refresh () {
         this.$http.get(`/api/channels/${this.$route.params.channel}`)
           .then(({ data }) => {
             this.selectChannel(data);
-
-            this.updateMessages(data.latest_messages);
-        
-            this.subscribe();
           });
-      },
-
-      fetchChannelMessages () {
-        this.$http.get(`/api/channels/${this.currentChannel.id}`)
-          .then(({ data }) => this.updateMessages(data.latest_messages));
-        
-        this.subscribe();
-      },
-
-      subscribe () {
-        this.$echo
-          .private('channel.' + this.currentChannel.name)
-          .listen('MessageSent', ({ message }) => this.addMessage(message));
       },
     },
   };
 </script>
+
+<style>
+.conversation {
+    font-size: 15px;
+    padding: 1rem;
+}
+</style>

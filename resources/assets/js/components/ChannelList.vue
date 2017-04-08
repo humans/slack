@@ -10,9 +10,13 @@
 
         <ul>
             <li v-for="channel in channels">
-                <a href="#" @click.prevent="selectChannel(channel)">
+                <router-link
+                    :to="{ 
+                         name: 'channel', 
+                         params: { channel: channel.id },
+                    }">
                     {{ channel.name }}
-                </a>
+                </router-link>
             </li>
         </ul>
     </nav>

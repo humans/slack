@@ -61,15 +61,14 @@ export default new Vuex.Store({
       }
 
       commit('selectChannel', channel);
-      commit('updateMessages', []);
+      commit('updateMessages', channel.latest_messages);
       commit('closeModal');
 
-      axios.patch(`/api/user/settings/active_channel/${channel.id}`);
+      echo
+        .private('channel.' + state.currentChannel.name)
+        .listen('MessageSent', ({ message }) => commit('addMessage', message));
 
-      router.push({
-        name: 'channel',
-        params: { channel: channel.id },
-      });
+      axios.patch(`/api/user/settings/active_channel/${channel.id}`);
     },
 
     addChannel ({ dispatch, commit }, channel) {

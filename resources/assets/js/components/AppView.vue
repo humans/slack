@@ -63,6 +63,38 @@
 </script>
 
 <style>
+:root {
+    --black: #2c2d30;
+    --grey: #9e9ea7;
+    --flesh: #f3e3cc;
+    --orange: #f3951d;
+    --sidebar-background: var(--flesh);
+    --sidebar-color-root: #828d71;
+    --sidebar-color-accent: #101410;
+    --sidebar-highlight: var(--orange);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+html, body {
+    color: var(--black);
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+}
+
+html, body, #app {
+    height: 100%;
+    width: 100%;
+    line-height: 1.2;
+}
+
 .slack {
     height: 100%;
     width: 100%;
