@@ -52,9 +52,6 @@ class AddChannelTest extends TestCase
         ]);
 
         $this->assertCount(1, $team->channels);
-        $this->assertTrue($team->channels()->whereName('projects')->exists());
-
-        $this->instance(Team::class, $team);
 
         $response = $this->json('POST', route('channels.store', $team), [
             'name' => 'projects',
@@ -62,7 +59,7 @@ class AddChannelTest extends TestCase
 
         $response->assertStatus(422);
         $response->assertJsonFragment([
-            'The name has already been taken.'
+            '"projects" is already taken by a channel, username, or user group.'
         ]);
 
         $this->assertCount(1, $team->channels);

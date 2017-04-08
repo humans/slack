@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Events\ChannelCreated;
+use Illuminate\Database\Eloquent\Builder;
 
 class Team extends Model
 {
@@ -23,6 +24,18 @@ class Team extends Model
         static::created(function (self $team) {
             $team->configure();
         });
+    }
+
+    /**
+     * Find the team by the slug.
+     *
+     * @param  Builder  $query
+     * @param  string  $slug
+     * @return Builder
+     */
+    public function scopeBySlug(Builder $query, $slug)
+    {
+        return $query->whereSlug($slug)->first();
     }
 
     /**

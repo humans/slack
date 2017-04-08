@@ -82,4 +82,15 @@ class TeamTest extends TestCase
             return $channel->name === 'random';
         }));
     }
+
+    /** @test **/
+    function find_by_the_slug()
+    {
+        factory(Team::class)->create([
+            'name' => 'Artisan.ph',
+            'slug' => 'artisanph',
+        ]);
+
+        $this->assertEquals('artisanph', Team::bySlug('artisanph')->slug);
+    }
 }
