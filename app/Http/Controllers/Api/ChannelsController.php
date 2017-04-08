@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Team;
 use App\Channel;
+use Illuminate\Http\Request;
 use App\Http\Requests\CreateChannelRequest;
 
 class ChannelsController extends Controller
@@ -11,12 +12,13 @@ class ChannelsController extends Controller
     /**
      * Return all the channels under the team.
      *
+     * @param  Request  $request
      * @param  Team  $team
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function index(Team $team)
+    public function index(Request $request, Team $team)
     {
-        return $team->channels;
+        return $request->user()->channels;
     }
 
     /**

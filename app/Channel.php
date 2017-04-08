@@ -5,6 +5,16 @@ namespace App;
 class Channel extends Model
 {
     /**
+     * Add a user to the channel.
+     *
+     * @return void
+     */
+    public function addUser(User $user)
+    {
+        $this->users()->attach($user);
+    }
+
+    /**
      * It has many messages.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
