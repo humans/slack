@@ -112,6 +112,13 @@ html, body, #app {
 .workspace {
     display: flex;
     flex-direction: column;
+    flex-basis: calc(100% - 220px);
+    width: 100%;
+}
+
+.sidebar {
+    flex-basis: 220px;
+    width: 220px;
 }
 
 .pull-right { margin-left: auto; }

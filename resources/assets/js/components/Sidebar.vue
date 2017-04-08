@@ -24,7 +24,6 @@ export default {
     background: var(--sidebar-background);
     color: var(--sidebar-color);
     height: 100%;
-    width: 220px;
 }
 
 .sidebar a {

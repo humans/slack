@@ -46,6 +46,8 @@
 <style>
 .conversation {
     font-size: 15px;
-    padding: 1rem;
+    height: calc(100% - 4rem);
+    overflow: auto;
+    padding: 1.25rem;
 }
 </style>
