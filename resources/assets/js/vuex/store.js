@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import axios from 'axios';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import router from '../routes/router';
@@ -72,8 +71,6 @@ export default new Vuex.Store({
       echo
         .private('channel.' + state.currentChannel.name)
         .listen('MessageSent', ({ message }) => commit('addMessage', message));
-
-      axios.patch(`/api/user/settings/active_channel/${channel.id}`);
     },
 
     addChannel ({ dispatch, commit }, channel) {

@@ -41,7 +41,14 @@
 
       submit () {
         this.$http.post('/api/channels', this.$data)
-          .then(({ data }) => this.addChannel(data))
+          .then(({ data }) => {
+            this.addChannel(data);
+
+            this.$router.push({
+              name: 'channel',
+              params: { channel: data.id },
+            });
+          })
           .catch((error) => {
             this.errors = error.response.data;
           });
