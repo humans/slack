@@ -44,7 +44,8 @@ export default {
       this.$http.get('/api/me')
         .then(({ data }) => {
           this.updateUserDetails(data);
-          this.worldBuilding();
+
+          this.redirectToTheLastChannel();
         });
     },
 
@@ -53,11 +54,12 @@ export default {
         .then(({ data }) => this.updateChannels(data));
     },
 
-    worldBuilding () {
+    redirectToTheLastChannel () {
       if (! this.$route.fullPath === '/') {
         return;
       }
 
+      // Redirect the user to the last channel they were in.
       this.$router.push({
         name: 'channel',
         params: { channel: this.currentUser.settings.active_channel.id },
