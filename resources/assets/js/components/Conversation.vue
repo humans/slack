@@ -37,9 +37,7 @@
 
       refresh () {
         this.$http.get(`/api/channels/${this.$route.params.channel}`)
-          .then(({ data }) => {
-            this.selectChannel(data);
-          });
+          .then(({ data }) => this.selectChannel(data));
       },
     },
   };

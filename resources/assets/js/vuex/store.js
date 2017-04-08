@@ -10,13 +10,22 @@ export default new Vuex.Store({
   state: {
     modal: null,
 
+    team: {},
     channels: [],
     messages: [],
-    userSettings: null,
+    currentUser: null,
     currentChannel: null,
   },
 
   mutations: {
+    updateUserDetails (state, user) {
+      state.currentUser = user;
+    },
+
+    updateTeam (state, team) {
+      state.team = team;
+    },
+
     openModal (state, component) {
       state.modal = component;
     },
@@ -33,10 +42,6 @@ export default new Vuex.Store({
       state.channels.push(channel);
 
       state.channels = _.orderBy(state.channels, 'name');
-    },
-
-    updateUserSettings (state, settings) {
-      state.userSettings = settings;
     },
 
     updateMessages (state, messages) {
