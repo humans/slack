@@ -5,7 +5,7 @@
                 <a href="#">Channels</a>
             </h3>
 
-            <a href="#" class="pull-right" @click.prevent="openModal('create-channel-modal')">
+            <a href="#" class="plus pull-right" @click.prevent="openModal('create-channel-modal')">
                 +
             </a>
         </header>

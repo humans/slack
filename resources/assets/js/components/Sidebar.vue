@@ -35,14 +35,23 @@ export default {
 .sidebar-header {
     display: flex;
     padding: 0 1rem;
+    align-items: center;
 }
 
-.sidebar-heading, .sidebar-heading a {
+.sidebar-heading {
     opacity: 0.8;
     font-size: 13px;
     font-weight: 700;
-    text-decoration: none;
+    line-height: 1;
     text-transform: uppercase;
+}
+
+.sidebar-heading .pull {
+    line-height: 1;
+}
+
+.sidebar-heading a {
+    text-decoration: none;
 }
 
 .sidebar-heading a:hover {
@@ -56,6 +65,10 @@ export default {
 .team-name {
     font-size: 1.125rem;
     font-weight: 700;
+}
+
+.plus {
+    text-decoration: none;
 }
 </style>
 
