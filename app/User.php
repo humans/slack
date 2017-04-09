@@ -3,6 +3,7 @@
 namespace App;
 
 use Laravel\Passport\HasApiTokens;
+use App\Events\UserRegistered;
 use App\Events\MessageSent;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -42,6 +43,8 @@ class User extends Authenticatable
 
         static::created(function (self $user) {
             $user->configure();
+
+            event(new UserRegistered($user));
         });
     }
 

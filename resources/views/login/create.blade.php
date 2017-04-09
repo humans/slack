@@ -13,3 +13,5 @@
 
     <button>Login</button>
 </form>
+
+<a href="{{ route('register.create', $team) }}">Register</a>

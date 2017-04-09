@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -29,6 +30,6 @@ class UserRegistered
      */
     public function __construct(User $user)
     {
-        $this->$user = $user;
+        $this->user = $user;
     }
 }
