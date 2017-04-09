@@ -37,7 +37,9 @@
     },
 
     methods: {
-      ...mapActions(['addChannel']),
+      ...mapActions({
+        addChannel: 'channel/add'
+      }),
 
       submit () {
         this.$http.post('/api/channels', this.$data)

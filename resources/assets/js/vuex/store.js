@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import * as actions from './actions.js';
 import * as getters from './getters.js';
 import * as mutations from './mutations.js';
+import modules from './modules';
 
 Vue.use(Vuex);
 
@@ -11,13 +12,12 @@ export default new Vuex.Store({
     modal: null,
 
     team: {},
-    channels: [],
     messages: [],
     currentUser: {},
-    currentChannel: {},
   },
 
   actions,
   getters,
   mutations,
+  modules,
 });

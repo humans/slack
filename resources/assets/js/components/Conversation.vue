@@ -15,7 +15,7 @@
   export default {
     components: { Message },
 
-    computed: mapState(['messages', 'currentChannel']),
+    computed: mapState(['messages']),
 
     data () {
       return { team: window.Slack.team };
@@ -32,8 +32,10 @@
     },
 
     methods: {
-      ...mapActions(['selectChannel']),
       ...mapMutations(['addMessage', 'updateMessages']),
+      ...mapActions({
+        selectChannel: 'channel/select',
+      }),
 
       refresh () {
         this.$http.get(`/api/channels/${this.$route.params.channel}`)

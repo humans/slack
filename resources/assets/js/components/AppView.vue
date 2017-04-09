@@ -35,8 +35,15 @@ export default {
   },
 
   methods: {
-    ...mapMutations(['updateTeam', 'updateChannels', 'updateUserDetails']),
-    ...mapActions(['selectChannel']),
+    ...mapMutations({
+      updateTeam: 'updateTeam',
+      updateUserDetails: 'updateUserDetails',
+      refreshChannels: 'channel/refresh',
+    }),
+
+    ...mapActions({
+      selectChannel: 'channel/select'
+    }),
 
     fetchTeamDetails () {
       this.$http.get('/api/team')
@@ -54,7 +61,7 @@ export default {
 
     fetchChannels () {
       this.$http.get('/api/channels')
-        .then(({ data }) => this.updateChannels(data));
+        .then(({ data }) => this.refreshChannels(data));
     },
 
     redirectToTheLastChannel () {

@@ -2,7 +2,7 @@
     <header class="client-header">
         <div class="message-details">
             <h2 class="conversation-name">
-                #{{ currentChannel.name }}
+                #{{ channel.name }}
             </h2>
         </div>
     </header>
@@ -12,7 +12,9 @@
 import { mapState } from 'vuex';
 
 export default {
-  computed: mapState(['currentChannel']),
+  computed: mapState({
+    channel: state => state.channel.current
+  }),
 }
 </script>
 

@@ -13,14 +13,16 @@ import { mapState, mapMutations } from 'vuex';
 
 export default {
   computed: {
-    ...mapState(['currentChannel']),
+    ...mapState({
+      channel: state => state.channel.current 
+    }),
 
     placeholder () {
-      if (! this.currentChannel) {
+      if (! this.channel) {
         return null;
       }
 
-      return `Message #${this.currentChannel.name}`;
+      return `Message #${this.channel.name}`;
     },
   },
 
@@ -33,7 +35,7 @@ export default {
 
     send () {
       this.$http
-        .post(`/api/channels/${this.currentChannel.id}/messages`, { message: this.message })
+        .post(`/api/channels/${this.channel.id}/messages`, { message: this.message })
         .then(({ data }) => this.addMessage(data));
 
       this.message = null;

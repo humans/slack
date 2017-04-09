@@ -2,7 +2,7 @@
     <nav class="channel-list">
         <header class="sidebar-header">
             <h3 class="sidebar-heading">
-                <a href="#">Channels ({{ totalChannels }})</a>
+                <a href="#">Channels ({{ total }})</a>
             </h3>
 
             <a href="#" class="plus pull-right" @click.prevent="openModal('create-channel-modal')">
@@ -31,8 +31,8 @@
 
   export default {
     computed: mapGetters({
-      channels: 'joinedChannels',
-      totalChannels: 'totalChannels',
+      channels: 'channel/joined',
+      total: 'channel/total',
     }),
 
     mounted () {
@@ -40,8 +40,11 @@
     },
 
     methods: {
-      ...mapMutations(['addChannel', 'openModal']),
-      ...mapActions(['selectChannel']),
+      ...mapActions(['channel/select']),
+      ...mapMutations({
+        addChannel: 'channel/add',
+        openModal: 'openModal',
+      }),
 
       subscribe () {
         this.$echo
