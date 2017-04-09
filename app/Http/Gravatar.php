@@ -3,9 +3,17 @@
 namespace App\Http;
 
 use GuzzleHttp\Client as Guzzle;
+use GuzzleHttp\Exception\ClientException;
 
 class Gravatar
 {
+    /**
+     * Gravatar's base URL.
+     *
+     * @var string
+     */
+    const GRAVATAR_URL = 'http://gravatar.com/avatar';
+
     /**
      * HTTP handler.
      *
@@ -51,14 +59,40 @@ class Gravatar
      */
     public function download()
     {
-        $hash = md5($this->email);
-        $url = 'http://gravatar.com/avatar/' . $hash;
-        $image = "/uploads/avatars/{$hash}.jpg";
+        try {
+            $url = '/uploads/avatars/' . md5($this->email) . '.jpg';
 
-        $this->guzzle->get($url, [
-            'sink' => public_path($image)
+            $this->save($url);
+        } catch (ClientException $e) {
+            return null;
+        }
+
+        return $url;
+    }
+
+    /**
+     * Build the gravatar download URL.
+     *
+     * @param  string  $hash
+     * @return string
+     */
+    private function url($hash)
+    {
+        return static::GRAVATAR_URL . '/' . $hash . '?' . http_build_query([
+            'd' => '404'
         ]);
+    }
 
-        return $image;
+    /**
+     * Save the image to the given folder.
+     *
+     * @param  string  $destination
+     * @return void
+     */
+    private function save($destination)
+    {
+        $url = $this->url($hash);
+
+        $this->guzzle->get($url, ['sink' => public_path($destimation)]);
     }
 }
