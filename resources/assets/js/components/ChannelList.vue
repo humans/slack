@@ -2,7 +2,7 @@
     <nav class="channel-list">
         <header class="sidebar-header">
             <h3 class="sidebar-heading">
-                <a href="#">Channels</a>
+                <a href="#">Channels ({{ channelCount }})</a>
             </h3>
 
             <a href="#" class="plus pull-right" @click.prevent="openModal('create-channel-modal')">
@@ -11,7 +11,7 @@
         </header>
 
         <ul class="channels">
-            <li class="channel" v-for="channel in channels">
+            <li class="channel" v-for="channel in joinedChannels">
                 <router-link
                     active-class="active"
                     class="channel-link"
@@ -27,10 +27,10 @@
 </template>
 
 <script>
-  import { mapState, mapMutations, mapActions } from 'vuex';
+  import { mapGetters, mapMutations, mapActions } from 'vuex';
 
   export default {
-    computed: mapState(['channels']),
+    computed: mapGetters(['joinedChannels', 'channelCount']),
 
     mounted () {
       this.subscribe();

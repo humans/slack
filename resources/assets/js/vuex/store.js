@@ -16,6 +16,20 @@ export default new Vuex.Store({
     currentChannel: {},
   },
 
+  getters: {
+    joinedChannels (state, getters) {
+      return state.channels.filter((channel) => channel.joined);
+    },
+
+    availableChannels (state, getters) {
+      return state.channels.filter((channel) => ! channel.joined);
+    },
+
+    channelCount (state, getters) {
+      return state.channels.length;
+    },
+  },
+
   mutations: {
     updateUserDetails (state, user) {
       state.currentUser = user;
