@@ -33,16 +33,10 @@ export default new Vuex.Store({
       state.modal = null;
     },
 
-    addMessage (state, message) {
-      state.messages.push(message);
-    },
-
-    addChannel (state, channel) {
-      state.channels.push(channel);
-
-      state.channels = _.orderBy(state.channels, 'name');
-    },
-
+    /**
+     * We have to sort them since the messages are in
+     * descending order when we query it from the server.
+     */
     updateMessages (state, messages) {
       state.messages = messages;
 
@@ -55,6 +49,16 @@ export default new Vuex.Store({
 
     selectChannel (state, channel) {
       state.currentChannel = channel;
+    },
+
+    addMessage (state, message) {
+      state.messages.push(message);
+    },
+
+    addChannel (state, channel) {
+      state.channels.push(channel);
+
+      state.channels = _.orderBy(state.channels, 'name');
     },
   },
 

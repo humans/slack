@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
 
 class Channel extends Model
@@ -26,6 +27,22 @@ class Channel extends Model
     public function scopePrivate(Builder $query)
     {
         return $query->where('is_private', true);
+    }
+
+    /**
+     * Return all the channels except the specified items.
+     *
+     * @param  Builder  $query
+     * @param  Collection|array  $channels
+     * @return Builder
+     */
+    public function scopeExcept(Builder $query, $channels)
+    {
+        if ($channels instanceof Collection) {
+            $channels = $channels->pluck('id');
+        }
+
+        return $query->whereNotIn('id', $channels);
     }
 
     /**

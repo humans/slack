@@ -11,6 +11,10 @@ Route::middleware('auth:api')->domain('{team}.' . env('APP_DOMAIN'))->group(func
         'only' => ['index', 'show', 'store']
     ]);
 
+    Route::resource('available_channels', 'AvailableChannelsController', [
+        'only' => ['index']
+    ]);
+
     Route::resource('channels.messages', 'ChannelMessagesController', [
         'only' => ['store']
     ]);

@@ -10,8 +10,12 @@ use App\Http\Requests\CreateChannelRequest;
 class ChannelsController extends Controller
 {
     /**
-     * Return all the public channels and all the private channels 
+     * Return all the public channels and all the private channels
      * the user belongs to.
+     *
+     * Let's also include all the channels we can join to in here.
+     *
+     * Not sure if this'll start doing _too_ much though.
      *
      * @param  Request  $request
      * @param  Team  $team
@@ -19,7 +23,7 @@ class ChannelsController extends Controller
      */
     public function index(Request $request, Team $team)
     {
-        return $request->user()->channels;
+        return $request->user()->availableChannels();
     }
 
     /**

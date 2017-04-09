@@ -128,4 +128,14 @@ class Team extends Model
     {
         return $this->hasMany(Channel::class)->orderBy('name', 'ASC');
     }
+
+    /**
+     * It has many public channels.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function publicChannels()
+    {
+        return $this->hasMany(Channel::class)->public()->orderBy('name');
+    }
 }

@@ -96,6 +96,35 @@ class User extends Authenticatable
     }
 
     /**
+     * Return all the available channels.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function availableChannels()
+    {
+        $channels = $this->channels->mark('joined', true);
+
+        return $channels->merge(
+            $this->remainingChannels($channels)
+        )->sortBy('name')->values();
+    }
+
+    /**
+     * Return all the public channels we haven't joined in yet.
+     *
+     * @param  \Illuminate\Support\Collection  $channels
+     * @return Collection
+     */
+    private function remainingChannels($channels)
+    {
+        return $this->team
+            ->publicChannels()
+            ->except($channels)
+            ->get()
+            ->mark('joined', false);
+    }
+
+    /**
      * It has settings.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
@@ -133,5 +162,15 @@ class User extends Authenticatable
     public function channels()
     {
         return $this->belongsToMany(Channel::class)->orderBy('name');
+    }
+
+    /**
+     * Return all the public channels.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function publicChannels()
+    {
+        return $this->belongsToMany(Channel::class)->public()->orderBy('name');
     }
 }
