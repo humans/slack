@@ -3,6 +3,8 @@
         <sidebar></sidebar>
 
         <section class="workspace">
+            <client-header></client-header>
+
             <router-view></router-view>
 
             <chatbox></chatbox>
@@ -14,6 +16,7 @@
 </template>
 
 <script>
+import ClientHeader from './ClientHeader.vue';
 import Conversation from './Conversation.vue';
 import Chatbox from './Chatbox.vue';
 import CreateChannelModal from './CreateChannelModal.vue';
@@ -21,11 +24,11 @@ import Sidebar from './Sidebar.vue';
 import { mapState, mapActions, mapMutations } from 'vuex';
 
 export default {
-  components: { Sidebar, Conversation, Chatbox, CreateChannelModal },
+  components: { ClientHeader, Sidebar, Conversation, Chatbox, CreateChannelModal },
 
   computed: mapState(['modal', 'currentUser']),
 
-  beforeMount () {
+  created () {
     this.fetchTeamDetails();
     this.fetchChannels();
     this.fetchUserDetails();

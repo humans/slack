@@ -1,22 +1,17 @@
 <template>
     <aside class="sidebar">
-        <div class="team">
-            <h1 class="team-name">{{ team.name }}</h1>
-            <span class="logged-user" v-if="currentUser">{{ currentUser.username }}</span>
-        </div>
+        <team-menu></team-menu>
 
         <channel-list></channel-list>
     </aside>
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import ChannelList from './ChannelList';
+import ChannelList from './ChannelList.vue';
+import TeamMenu from './TeamMenu.vue';
 
 export default {
-  components: { ChannelList },
-
-  computed: mapState(['team', 'currentUser']),
+  components: { ChannelList, TeamMenu },
 }
 </script>
 
@@ -36,6 +31,7 @@ export default {
     display: flex;
     padding: 0 1rem;
     align-items: center;
+    height: 2rem;
 }
 
 .sidebar-heading {

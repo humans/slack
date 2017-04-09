@@ -12,8 +12,8 @@ export default new Vuex.Store({
     team: {},
     channels: [],
     messages: [],
-    currentUser: null,
-    currentChannel: null,
+    currentUser: {},
+    currentChannel: {},
   },
 
   mutations: {
