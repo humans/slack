@@ -16,6 +16,6 @@ class CurrentUserController extends Controller
      */
     public function __invoke(Request $request, Team $team)
     {
-        return $request->user()->load('settings', 'settings.activeChannel');
+        return $request->user()->load('settings');
     }
 }

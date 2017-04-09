@@ -2,6 +2,7 @@
     <aside class="sidebar">
         <div class="team">
             <h1 class="team-name">{{ team.name }}</h1>
+            <span class="logged-user" v-if="currentUser">{{ currentUser.username }}</span>
         </div>
 
         <channel-list></channel-list>
@@ -15,7 +16,7 @@ import ChannelList from './ChannelList';
 export default {
   components: { ChannelList },
 
-  computed: mapState(['team']),
+  computed: mapState(['team', 'currentUser']),
 }
 </script>
 

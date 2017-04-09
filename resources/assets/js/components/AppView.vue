@@ -62,7 +62,7 @@ export default {
       // Redirect the user to the last channel they were in.
       this.$router.push({
         name: 'channel',
-        params: { channel: this.currentUser.settings.active_channel.id },
+        params: { channel: this.currentUser.settings.active_channel_id },
       });
     },
   },
