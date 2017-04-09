@@ -15,11 +15,16 @@ class UserTest extends TestCase
 {
     use DatabaseMigrations;
 
+    public function setUp()
+    {
+        parent::setUp();
+
+        Event::fake();
+    }
+
     /** @test **/
     function send_a_message_to_a_channel()
     {
-        Event::fake();
-
         $team = factory(\App\Team::class)->create();
 
         $channel = $team->addChannel(['name' => 'projects']);
@@ -40,13 +45,22 @@ class UserTest extends TestCase
     {
         $user = factory(User::class)->create();
 
+        $user->configure();
+
         $this->assertCount(1, \App\UserSettings::all());
     }
 
     /** @test **/
     function join_in_general_and_random_after_registering()
     {
-        $user = factory(User::class)->create();
+        $team = factory(Team::class)->create();
+
+        $team->addChannel(['name' => 'general']);
+        $team->addChannel(['name' => 'random']);
+
+        $user = factory(User::class)->create(['team_id' => $team->id]);
+
+        $user->configure();
 
         $this->assertTrue($user->channels->contains(function ($channel) {
             return $channel->name === 'general';
@@ -60,16 +74,20 @@ class UserTest extends TestCase
     /** @test **/
     function set_the_latest_channel_accessed_as_general_when_the_user_is_new()
     {
-        $user = factory(User::class)->create();
+        $team = factory(Team::class)->create();
 
-        $this->assertEquals('general', $user->settings->activeChannel->name);
+        $team->addChannel(['name' => 'general']);
+
+        $user = factory(User::class)->create(['team_id' => $team->id]);
+
+        $user->configure();
+
+        $this->assertEquals('general', $user->fresh()->settings->activeChannel->name);
     }
 
     /** @test **/
     function join_a_channel()
     {
-        Event::fake();
-
         $team = factory(Team::class)->create();
         $user = factory(User::class)->create(['team_id' => $team->id]);
 

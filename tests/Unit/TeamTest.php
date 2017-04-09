@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Team;
 use Tests\TestCase;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -15,6 +16,8 @@ class TeamTest extends TestCase
     /** @test **/
     function register_a_user_under_the_team()
     {
+        Event::fake();
+
         $team = factory(Team::class)->create();
 
         $team->addUser([

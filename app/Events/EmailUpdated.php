@@ -11,12 +11,12 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class UserRegistered
+class EmailUpdated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
-     * The user that _just_ registered, if the class hasn't pointed it out yet.
+     * The user that changed their email address.
      *
      * @var User
      */

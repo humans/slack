@@ -86,7 +86,7 @@ class User extends Authenticatable
      */
     public function configure()
     {
-        $this->channels()->attach($this->team->defaultChannels()->pluck('id'));
+        $this->channels()->attach($this->team->defaultChannels());
 
         $settings = new UserSettings;
 

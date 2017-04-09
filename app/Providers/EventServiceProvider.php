@@ -16,6 +16,9 @@ class EventServiceProvider extends ServiceProvider
         \App\Events\UserRegistered::class => [
             \App\Listeners\DownloadGravatarImage::class,
         ],
+        \App\Events\EmailUpdated::class => [
+            \App\Listeners\DownloadGravatarImage::class,
+        ],
     ];
 
     /**
