@@ -25,7 +25,7 @@ export default new Vuex.Store({
       return state.channels.filter((channel) => ! channel.joined);
     },
 
-    channelCount (state, getters) {
+    totalChannels (state, getters) {
       return state.channels.length;
     },
   },
