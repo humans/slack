@@ -15,8 +15,8 @@ class UserRegistered
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
-     * The user that _just_ registered, if the class hasn't pointed it 
-     * out yet.
+     * The user that _just_ registered, if the class
+     * hasn't pointed it out yet.
      *
      * @var User
      */
@@ -30,15 +30,5 @@ class UserRegistered
     public function __construct(User $user)
     {
         $this->$user = $user;
-    }
-
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return Channel|array
-     */
-    public function broadcastOn()
-    {
-        // return new PrivateChannel('channel-name');
     }
 }
