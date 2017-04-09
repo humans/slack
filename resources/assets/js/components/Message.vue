@@ -1,6 +1,6 @@
 <template>
     <div class="message">
-        <img class="message-user-avatar" alt="User avatar" src="error">
+        <img class="message-user-avatar" alt="User avatar" :src="message.user.avatar">
 
         <div class="message-wrapper">
             <div class="message-details">
