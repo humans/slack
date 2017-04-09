@@ -44,6 +44,8 @@
       submit () {
         this.$http.post('/api/channels', this.$data)
           .then(({ data }) => {
+            data.joined = true;
+
             this.addChannel(data);
 
             this.$router.push({

@@ -42,6 +42,8 @@ class ChannelCreated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
+        $this->channel->joined = false;
+
         return new PrivateChannel(
             $this->channel->team->slug . '.channel'
         );
