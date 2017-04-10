@@ -27,7 +27,7 @@ export default {
   components: { ClientHeader, Sidebar, Conversation, Chatbox, CreateChannelModal },
 
   computed: mapState({
-    modal: 'modal/component',
+    modal: state => state.modal.component,
     currentUser: 'currentUser',
   }),
 

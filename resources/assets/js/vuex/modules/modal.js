@@ -1,6 +1,6 @@
 const mutations = {
-  open:  (state, component) => state.modal = component,
-  close: state => state.modal = null,
+  open:  (state, component) => state.component = component,
+  close: state => state.component = null,
 };
 
 export default {
