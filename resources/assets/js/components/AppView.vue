@@ -3,11 +3,11 @@
         <sidebar></sidebar>
 
         <section class="workspace">
-            <!-- <client-header></client-header> -->
+            <client-header></client-header>
 
             <router-view></router-view>
 
-            <!-- <chatbox></chatbox> -->
+            <chatbox></chatbox>
         </section>
 
         <!-- Modal -->
@@ -26,7 +26,10 @@ import { mapState, mapActions, mapMutations } from 'vuex';
 export default {
   components: { ClientHeader, Sidebar, Conversation, Chatbox, CreateChannelModal },
 
-  computed: mapState(['modal', 'currentUser']),
+  computed: mapState({
+    modal: 'modal/component',
+    currentUser: 'currentUser',
+  }),
 
   created () {
     this.fetchTeamDetails();

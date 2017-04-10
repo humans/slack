@@ -5,7 +5,7 @@ export const select = ({ commit, state }, channel) => {
 
   commit('select', channel);
   commit('updateMessages', channel.latest_messages, { root: true });
-  commit('closeModal', null, { root: true });
+  commit('modal/close', null, { root: true });
 
   window.echo
     .private('channel.' + state.current.name)

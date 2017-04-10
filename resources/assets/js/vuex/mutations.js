@@ -2,10 +2,6 @@ export const updateUserDetails = (state, user) => state.currentUser = user;
 
 export const updateTeam = (state, team) => state.team = team;
 
-export const openModal = (state, component) => state.modal = component;
-
-export const closeModal = state => state.modal = null;
-
 export const addMessage = (state, message) => state.messages.push(message);
 
 /**

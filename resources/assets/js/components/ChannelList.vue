@@ -43,7 +43,7 @@
       ...mapActions(['channel/select']),
       ...mapMutations({
         addChannel: 'channel/add',
-        openModal: 'openModal',
+        openModal: 'modal/open',
       }),
 
       subscribe () {
