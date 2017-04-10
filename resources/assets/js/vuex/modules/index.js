@@ -1,10 +1,9 @@
-const files = require.context('.', false, /\.js$/)
-const modules = {}
+const modules = {
+  channels: require('./channel/index.js').default
+};
 
-files.keys().forEach((key) => {
-  if (key === './index.js') return
-  modules[key.replace(/(\.\/|\.js)/g, '')] = files(key).default
-})
+// We should loop through all the directories, and get the default
+// of all the index.js files.
 
-export default modules
+export default modules;
 
