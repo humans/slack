@@ -5,6 +5,10 @@
             :key="message.id"
             :message="message">
         </message>
+
+        <div class="join-channel" v-if="! currentChannel.joined">
+            <button>Join #{{ currentChannel.name }}</button>
+        </div>
     </div>
 </template>
 
@@ -15,7 +19,10 @@
   export default {
     components: { Message },
 
-    computed: mapState(['messages']),
+    computed: mapState({
+      messages: 'messages',
+      currentChannel: state => state.channel.current,
+    }),
 
     data () {
       return { team: window.Slack.team };

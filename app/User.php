@@ -125,6 +125,20 @@ class User extends Authenticatable
     }
 
     /**
+     * REturn the channel with the given id and add the user access on it.
+     *
+     * @param  string  $id
+     * @return Channel
+     */
+    public function channel($id)
+    {
+        return $this->availableChannels()
+            ->where('id', $id)
+            ->first()
+            ->load('latestMessages', 'latestMessages.user');
+    }
+
+    /**
      * It has settings.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne

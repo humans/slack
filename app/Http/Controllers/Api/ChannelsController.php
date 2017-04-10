@@ -29,12 +29,14 @@ class ChannelsController extends Controller
     /**
      * Return the channel information.
      *
+     * @param  Request  $request
      * @param  Team  $team
+     * @param  int  $channel
      * @return Channel
      */
-    public function show(Team $team, $channel)
+    public function show(Request $request, Team $team, $channel)
     {
-        return Channel::with('latestMessages', 'latestMessages.user')->find($channel);
+        return $request->user()->channel($channel);
     }
 
     /**

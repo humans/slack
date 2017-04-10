@@ -5,12 +5,19 @@
       <div class="list-items">
           <div class="channel-browser-divider">Channels you can join</div>
           <div class="channel" v-for="channel in availableChannels">
-              #{{ channel.name }}
+              <router-link :to="{
+                name: 'channel',
+                params: { channel: channel.id }
+              }">
+                  #{{ channel.name }}
+              </router-link>
           </div>
 
           <div class="channel-browser-divider">Channels you belong to</div>
           <div class="channel" v-for="channel in joinedChannels">
-              #{{ channel.name }}
+              <router-link to="{ name: 'channel', params: { channel: channel.id } }">
+                  #{{ channel.name }}
+              </router-link>
           </div>
       </div>
   </modal>

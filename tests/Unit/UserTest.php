@@ -102,4 +102,26 @@ class UserTest extends TestCase
             return $channel->name === 'general';
         }));
     }
+
+    /** @test **/
+    function return_the_channel_with_the_given_id_and_mark_if_the_channel_is_joined_or_not()
+    {
+        $team = factory(Team::class)->create();
+        $user = factory(User::class)->create(['team_id' => $team->id]);
+
+        $general = factory(Channel::class)->create([
+            'name' => 'general',
+            'team_id' => $team->id,
+        ]);
+
+        $channel = $user->channel($general->id);
+
+        $this->assertFalse($channel->joined);
+
+        $user->joinChannel($general);
+
+        $channel = $user->fresh()->channel($general->id);
+
+        $this->assertTrue($channel->joined);
+    }
 }
