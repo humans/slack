@@ -3,11 +3,11 @@
         <sidebar></sidebar>
 
         <section class="workspace">
-            <client-header></client-header>
+            <!-- <client-header></client-header> -->
 
             <router-view></router-view>
 
-            <chatbox></chatbox>
+            <!-- <chatbox></chatbox> -->
         </section>
 
         <!-- Modal -->

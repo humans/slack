@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export const refresh = (state, channels) => state.channels = channels;
 
 export const select = (state, channel) => state.current = channel;

@@ -1,9 +1,10 @@
-const modules = {
-  channels: require('./channel/index.js').default
-};
+const files = require.context('.', false, /\.js$/)
+const modules = {}
 
-// We should loop through all the directories, and get the default
-// of all the index.js files.
+files.keys().forEach((key) => {
+  if (key === './index.js') return
+  modules[key.replace(/(\.\/|\.js)/g, '')] = files(key).default
+})
 
-export default modules;
+export default modules
 
