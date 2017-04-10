@@ -1,6 +1,8 @@
 <template>
-    <div class="create-channel modal">
-        <form method="POST" @submit.prevent="submit">
+    <modal class="create-channel">
+        <template slot="heading">Create a channel</template>
+
+        <form @submit.prevent="submit">
             <div class="field" :class="{ 'has-error': hasErrors('name') }">
                 <label for="name">Channel Name</label>
                 <input id="name" name="name" type="text" v-model="name" autofill="off">
@@ -21,61 +23,53 @@
 
             <button type="submit">Create</button>
         </form>
-    </div>
+    </modal>
 </template>
 
 <script>
-  import { mapActions } from 'vuex';
+import { mapActions } from 'vuex';
+import Modal from './Modal';
 
-  export default {
-    data () {
-      return {
-        name: null,
-        description: null,
-        errors: {},
-      };
-    },
+export default {
+  components: { Modal },
 
-    methods: {
-      ...mapActions({
-        addChannel: 'channel/add'
-      }),
+  data () {
+    return {
+      name: null,
+      description: null,
+      errors: {},
+    };
+  },
 
-      submit () {
-        this.$http.post('/api/channels', this.$data)
-          .then(({ data }) => {
-            data.joined = true;
+  methods: {
+    ...mapActions({
+      addChannel: 'channel/add'
+    }),
 
-            this.addChannel(data);
+    submit () {
+      this.$http.post('/api/channels', this.$data)
+        .then(({ data }) => {
+          data.joined = true;
 
-            this.$router.push({
-              name: 'channel',
-              params: { channel: data.id },
-            });
-          })
-          .catch((error) => {
-            this.errors = error.response.data;
+          this.addChannel(data);
+
+          this.$router.push({
+            name: 'channel',
+            params: { channel: data.id },
           });
-      },
-
-      hasErrors (field) {
-        return this.errors.hasOwnProperty(field);
-      },
-
-      error (field) {
-        return this.errors[field][0];
-      },
+        })
+        .catch((error) => {
+          this.errors = error.response.data;
+        });
     },
-  };
-</script>
 
-<style>
-  .modal {
-    background-color: white;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-  }
-</style>
+    hasErrors (field) {
+      return this.errors.hasOwnProperty(field);
+    },
+
+    error (field) {
+      return this.errors[field][0];
+    },
+  },
+};
+</script>

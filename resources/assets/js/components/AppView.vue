@@ -20,11 +20,16 @@ import ClientHeader from './ClientHeader.vue';
 import Conversation from './Conversation.vue';
 import Chatbox from './Chatbox.vue';
 import CreateChannelModal from './CreateChannelModal.vue';
+import ChannelBrowserModal from './ChannelBrowserModal.vue';
 import Sidebar from './Sidebar.vue';
 import { mapState, mapActions, mapMutations } from 'vuex';
 
 export default {
-  components: { ClientHeader, Sidebar, Conversation, Chatbox, CreateChannelModal },
+  components: {
+    ClientHeader, Sidebar, Conversation, Chatbox,
+
+    CreateChannelModal, ChannelBrowserModal,
+  },
 
   computed: mapState({
     modal: state => state.modal.component,

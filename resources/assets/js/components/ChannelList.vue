@@ -2,7 +2,7 @@
     <nav class="channel-list">
         <header class="sidebar-header">
             <h3 class="sidebar-heading">
-                <a href="#">Channels ({{ total }})</a>
+                <a href="#" @click.prevent="openModal('channel-browser-modal')">Channels ({{ total }})</a>
             </h3>
 
             <a href="#" class="plus pull-right" @click.prevent="openModal('create-channel-modal')">
@@ -27,32 +27,32 @@
 </template>
 
 <script>
-  import { mapGetters, mapMutations, mapActions } from 'vuex';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
 
-  export default {
-    computed: mapGetters({
-      channels: 'channel/joined',
-      total: 'channel/total',
+export default {
+  computed: mapGetters({
+    channels: 'channel/joined',
+    total: 'channel/total',
+  }),
+
+  mounted () {
+    this.subscribe();
+  },
+
+  methods: {
+    ...mapActions(['channel/select']),
+    ...mapMutations({
+      addChannel: 'channel/add',
+      openModal: 'modal/open',
     }),
 
-    mounted () {
-      this.subscribe();
+    subscribe () {
+      this.$echo
+        .private('channel')
+        .listen('ChannelCreated', (e) => this.addChannel(e.channel));
     },
-
-    methods: {
-      ...mapActions(['channel/select']),
-      ...mapMutations({
-        addChannel: 'channel/add',
-        openModal: 'modal/open',
-      }),
-
-      subscribe () {
-        this.$echo
-          .private('channel')
-          .listen('ChannelCreated', (e) => this.addChannel(e.channel));
-      },
-    },
-  }
+  },
+};
 </script>
 
 <style>
