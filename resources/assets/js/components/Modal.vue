@@ -12,8 +12,8 @@
                         <slot name="heading"></slot>
                     </h1>
 
-                    <p class="modal-description">
-                        <slot name="description"></slot>
+                    <p class="modal-note">
+                        <slot name="note"></slot>
                     </p>
                 </div>
 

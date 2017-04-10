@@ -8,6 +8,8 @@ require('./bootstrap');
 import router from './routes/router';
 import store from './vuex/store';
 
+Vue.component('field', require('./components/Field.vue'));
+
 const app = new Vue({
   router,
   store,

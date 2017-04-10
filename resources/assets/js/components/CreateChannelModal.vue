@@ -1,25 +1,16 @@
 <template>
     <modal class="create-channel">
         <template slot="heading">Create a channel</template>
+        <template slot="note">Channels are where your team communicates. They’re best when organized around a topic — #leads, for example.</template>
 
         <form @submit.prevent="submit">
-            <div class="field" :class="{ 'has-error': hasErrors('name') }">
-                <label for="name">Channel Name</label>
-                <input id="name" name="name" type="text" v-model="name" autofill="off">
+            <field name="name" label="Channel Name"
+                :errors="errors.name" v-model="name">
+            </field>
 
-                <p class="field-error" v-if="hasErrors('name')">
-                    {{ error('name') }}
-                </p>
-            </div>
-
-            <div class="field" :class="{ '-error': hasErrors('description') }">
-                <label for="description">Description</label>
-                <textarea cols="30" id="description" name="" rows="10" v-model="description"></textarea>
-
-                <p class="field-error" v-if="hasErrors('description')">
-                    {{ error('description') }}
-                </p>
-            </div>
+            <field name="description" label="Purpose" optional
+                :errors="errors.description" v-model="description">
+            </field>
 
             <button type="submit">Create</button>
         </form>
@@ -61,14 +52,6 @@ export default {
         .catch((error) => {
           this.errors = error.response.data;
         });
-    },
-
-    hasErrors (field) {
-      return this.errors.hasOwnProperty(field);
-    },
-
-    error (field) {
-      return this.errors[field][0];
     },
   },
 };
