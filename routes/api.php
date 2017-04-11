@@ -7,6 +7,8 @@ Route::middleware('auth:api')->domain('{team}.' . env('APP_DOMAIN'))->group(func
     Route::get('team', 'TeamDetailsController')->name('team.details');
     Route::get('me', 'CurrentUserController')->name('me');
 
+    Route::post('channels/{channel}/join', 'JoinChannelController')->name('channels.join');
+
     Route::resource('channels', 'ChannelsController', [
         'only' => ['index', 'show', 'store']
     ]);
