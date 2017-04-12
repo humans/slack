@@ -77,6 +77,10 @@ class User extends Authenticatable
     public function joinChannel(Channel $channel)
     {
         $this->channels()->attach($channel);
+
+        $channel->joined = true;
+
+        return $channel;
     }
 
     /**

@@ -7,7 +7,7 @@
         </message>
 
         <div class="join-channel" v-if="! currentChannel.joined">
-            <button>Join #{{ currentChannel.name }}</button>
+            <button type="button" @click="join">Join #{{ currentChannel.name }}</button>
         </div>
     </div>
 </template>
@@ -42,7 +42,14 @@
       ...mapMutations(['addMessage', 'updateMessages']),
       ...mapActions({
         selectChannel: 'channel/select',
+        joinChannel: 'channel/join',
       }),
+
+      join () {
+        this.$http
+          .post(`/api/channels/${this.currentChannel.id}/join`)
+          .then(({ data }) => this.joinChannel(data));
+      },
 
       refresh () {
         this.$http.get(`/api/channels/${this.$route.params.channel}`)

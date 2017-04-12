@@ -56,6 +56,18 @@ class Channel extends Model
     }
 
     /**
+     * Mark the channel as joined.
+     *
+     * @return Channel
+     */
+    public function join()
+    {
+        $this->joined = true;
+
+        return $this;
+    }
+
+    /**
      * It has many messages.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
