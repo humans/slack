@@ -19,10 +19,13 @@ class CreateMessagesTable extends Migration
             $table->integer('channel_id')->unsigned();
             $table->foreign('channel_id')->references('id')->on('channels')->onDelete('cascade');
 
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->integer('messageable_id')->unsigned();
+            $table->string('messageable_type');
 
             $table->string('content');
+
+            // message, action
+            $table->string('type')->default('message');
 
             $table->timestamps();
         });

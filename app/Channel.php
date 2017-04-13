@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Builder;
 class Channel extends Model
 {
     /**
+     * The user's status in the channel.
+     *
+     * @var bool
+     */
+    public $joined = false;
+
+    /**
      * Return all the public channels.
      *
      * @param  Builder  $builder

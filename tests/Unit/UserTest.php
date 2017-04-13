@@ -35,7 +35,7 @@ class UserTest extends TestCase
             'password' => '123456',
         ]);
 
-        $user->sendMessage($channel, 'Hello World!');
+        $message = $user->sendMessage($channel, 'Hello World!');
 
         $this->assertCount(1, \App\Message::all());
     }
