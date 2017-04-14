@@ -62,7 +62,8 @@ class User extends Authenticatable
         $message->channel()->associate($channel);
 
         $message = $this->messages()->save($message)->load('user');
-broadcast(new MessageSent($message))->toOthers();
+
+        broadcast(new MessageSent($message))->toOthers();
 
         return $message;
     }
