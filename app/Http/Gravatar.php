@@ -60,9 +60,9 @@ class Gravatar
     public function download()
     {
         try {
-            $url = '/uploads/avatars/' . md5($this->email) . '.jpg';
+            $url = '/uploads/avatars/' . $hash = md5($this->email) . '.jpg';
 
-            $this->save($url);
+            $this->save($hash, $url);
         } catch (ClientException $e) {
             return null;
         }
@@ -86,13 +86,14 @@ class Gravatar
     /**
      * Save the image to the given folder.
      *
+     * @param  string  $hash
      * @param  string  $destination
      * @return void
      */
-    private function save($destination)
+    private function save($hash, $destination)
     {
         $url = $this->url($hash);
 
-        $this->guzzle->get($url, ['sink' => public_path($destimation)]);
+        $this->guzzle->get($url, ['sink' => public_path($destination)]);
     }
 }
