@@ -15,6 +15,23 @@ class Channel extends Model
     public $joined = false;
 
     /**
+     * Fields to append to serialization.
+     *
+     * @var array
+     */
+    protected $appends = ['joined'];
+
+    /**
+     * Return if the user querying this joined the channel.
+     *
+     * @return bool
+     */
+    public function getJoinedAttribute()
+    {
+        return $this->joined;
+    }
+
+    /**
      * Return all the public channels.
      *
      * @param  Builder  $builder
