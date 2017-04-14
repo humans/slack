@@ -11,8 +11,11 @@
   },
   "devDependencies": {
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
     "cross-env": "^3.2.3",
-    "laravel-mix": "0.*"
+    "laravel-mix": "0.*",
+    "uglify-js": "git+https://github.com/mishoo/UglifyJS2.git#harmony"
   },
   "dependencies": {
     "axios": "^0.15.3",
