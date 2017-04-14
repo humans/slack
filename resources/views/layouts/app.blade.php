@@ -8,7 +8,7 @@
         <title>Laravel</title>
 
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,700i" rel="stylesheet">
-        <!-- <link href="/css/app.css" rel="stylesheet"/> -->
+        <link href="/js/vue-styles.css" rel="stylesheet"/>
 
         <script>
          // We have to keep window.Laravel for now since Echo is being too clingy
@@ -24,6 +24,6 @@
             @yield('content')
         </div>
 
-        <script src="/js/app.js"></script>
+        <script src="{{ mix('js/app.js') }}"></script>
     </body>
 </html>
