@@ -17,6 +17,7 @@ class CreateBotsTable extends Migration
             $table->increments('id');
 
             $table->string('name');
+            $table->string('username');
             $table->string('default_image')->nullabe();
 
             $table->timestamps();

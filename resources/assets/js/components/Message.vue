@@ -1,10 +1,10 @@
 <template>
     <div class="message">
-        <img class="message-user-avatar" alt="User avatar" :src="message.user.avatar">
+        <img class="message-user-avatar" alt="User avatar" :src="message.messageable.avatar">
 
         <div class="message-wrapper">
             <div class="message-details">
-                <strong class="message-display-name">{{ message.user.username }}</strong>
+                <strong class="message-display-name">{{ message.messageable.username }}</strong>
 
                 <!-- We'll add a tooltip here -->
                 <a class="message-time">{{ $moment(message.created_at).format('H:mm A') }}</a>
