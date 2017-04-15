@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Conversation from '../components/Conversation';
+import ChannelConversation from '../components/ChannelConversation';
 
 Vue.use(VueRouter);
 
@@ -9,7 +9,7 @@ export default new VueRouter({
 
     routes: [
       { path: '/' },
-      { path: '/messages/:channel', name: 'channel', component: Conversation },
-      { path: '/messages/@:user', name: 'user', component: Conversation },
+      { path: '/messages/:channel', name: 'channel', component: ChannelConversation },
+      // { path: '/messages/@:user', name: 'user', component: Conversation },
     ],
 });
