@@ -17,7 +17,6 @@
 
 <script>
 import ClientHeader from './ClientHeader.vue';
-import Conversation from './Conversation.vue';
 import Chatbox from './Chatbox.vue';
 import CreateChannelModal from './CreateChannelModal.vue';
 import ChannelBrowserModal from './ChannelBrowserModal.vue';
@@ -26,7 +25,7 @@ import { mapState, mapActions, mapMutations } from 'vuex';
 
 export default {
   components: {
-    ClientHeader, Sidebar, Conversation, Chatbox,
+    ClientHeader, Sidebar, Chatbox,
 
     CreateChannelModal, ChannelBrowserModal,
   },
@@ -86,8 +85,8 @@ export default {
 
       // Redirect the user to the last channel they were in.
       this.$router.push({
-        name: 'channel',
-        params: { channel: this.currentUser.settings.active_channel_id },
+        name: this.currentUser.settings.active_conversation_type,
+        params: { channel: this.currentUser.settings.conversation_id },
       });
     },
   },

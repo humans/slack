@@ -92,7 +92,7 @@ class User extends Authenticatable
             'type' => $type,
         ]);
 
-        $message->channel()->associate($channel);
+        $message->conversation()->associate($channel);
 
         $message = $this->messages()->save($message)->load('user');
 
@@ -129,7 +129,9 @@ class User extends Authenticatable
 
         $settings = new UserSettings;
 
-        $settings->activeChannel()->associate($this->team->channels()->first());
+        if ($channel = $this->team->channels()->first()) {
+            $settings->conversation()->associate($channel);
+        }
 
         $this->settings()->save($settings);
     }

@@ -5,6 +5,34 @@ namespace App;
 class UserSettings extends Model
 {
     /**
+     * Add the fields to append to serialization.
+     *
+     * @var array
+     */
+    protected $appends = ['conversation', 'active_conversation'];
+
+    /**
+     * Return the type of conversation.
+     *
+     * @return Conversation
+     */
+    public function getConversationAttribute()
+    {
+        return $this->conversation()->first();
+    }
+
+    /**
+     * Return the active conversation type.
+     *
+     * @param  string  $type
+     * @return string
+     */
+    public function getActiveConversationAttribute($type)
+    {
+        return strtolower(class_basename($type));
+    }
+
+    /**
      * It belongs to a user.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -15,12 +43,12 @@ class UserSettings extends Model
     }
 
     /**
-     * It belongs to a channel.
+     * It belongs to a channel or a user.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function activeChannel()
+    public function conversation()
     {
-        return $this->belongsTo(Channel::class, 'active_channel_id');
+        return $this->morphTo();
     }
 }

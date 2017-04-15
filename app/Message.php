@@ -5,9 +5,9 @@ namespace App;
 class Message extends Model
 {
     /**
-     * It belongs to a user.
+     * It belongs to a user or a bot.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
     public function user()
     {
@@ -15,12 +15,12 @@ class Message extends Model
     }
 
     /**
-     * It belongs to a channel.
+     * It belongs to a channel or a user.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function channel()
+    public function conversation()
     {
-        return $this->belongsTo(Channel::class);
+        return $this->morphTo('conversation');
     }
 }

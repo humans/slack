@@ -41,10 +41,10 @@ class MessageSent implements ShouldBroadcast
     public function broadcastOn()
     {
         // We have to load this so serialization will work.
-        $this->message->load('user', 'channel');
+        $this->message->load('user', 'conversation');
 
         return new PrivateChannel(
-            $this->message->messageable->team->slug . '.channel.' . $this->message->channel->name
+            $this->message->messageable->team->slug . '.channel.' . $this->message->conversation->name
         );
     }
 }

@@ -82,7 +82,7 @@ class UserTest extends TestCase
 
         $user->configure();
 
-        $this->assertEquals('general', $user->fresh()->settings->activeChannel->name);
+        $this->assertEquals('general', $user->fresh()->settings->conversation->name);
     }
 
     /** @test **/

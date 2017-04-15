@@ -101,7 +101,7 @@ class Channel extends Model
      */
     public function messages()
     {
-        return $this->hasMany(Message::class);
+        return $this->morphMany(Message::class, 'conversation');
     }
 
     /**
@@ -111,7 +111,7 @@ class Channel extends Model
      */
     public function latestMessages()
     {
-        return $this->hasMany(Message::class)->limit(20)->orderBy('created_at', 'DESC');
+        return $this->morphMany(Message::class, 'conversation')->limit(20)->orderBy('created_at', 'DESC');
     }
 
     /**

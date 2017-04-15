@@ -19,8 +19,8 @@ class CreateUserSettingsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
-            $table->integer('active_channel_id')->unsigned()->nullable();
-            $table->foreign('active_channel_id')->references('id')->on('channels')->onDelete('set null');
+            $table->integer('conversation_id')->unsiged()->nullable();
+            $table->string('conversation_type')->nullable();
 
             $table->timestamps();
         });

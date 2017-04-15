@@ -18,9 +18,10 @@ class UpdateUserActiveChannelController extends Controller
      */
     public function __invoke(Request $request, Team $team, Channel $channel)
     {
-        $request->user()->settings()->update([
-            'active_channel_id' => $channel->id,
-        ]);
+        $settings = $request->user()->settings;
+
+        $settings->conversation()->associate($channel);
+        $settings->save();
 
         return ['response' => true];
     }

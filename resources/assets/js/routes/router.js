@@ -10,6 +10,6 @@ export default new VueRouter({
     routes: [
       { path: '/' },
       { path: '/messages/:channel', name: 'channel', component: ChannelConversation },
-      // { path: '/messages/@:user', name: 'user', component: Conversation },
+      { path: '/messages/@:user', name: 'user', component: ChannelConversation },
     ],
 });
