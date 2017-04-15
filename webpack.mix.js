@@ -12,5 +12,5 @@ const { mix } = require('laravel-mix');
  */
 
 mix
-  // .options({ extractVueStyles: true })
-  .js('resources/assets/js/app.js', 'public/js');
+    .options({ extractVueStyles: true })
+    .js('resources/assets/js/app.js', 'public/js');
