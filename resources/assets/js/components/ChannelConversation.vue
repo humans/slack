@@ -46,9 +46,9 @@
       }),
 
       join () {
-        // this.$http
-          // .post(`/api/channels/${this.currentChannel.id}/join`)
-          // .then(({ data }) => this.joinChannel(data));
+        this.$http
+          .post(`/api/channels/${this.currentChannel.id}/join`)
+          .then(({ data }) => this.joinChannel(data));
       },
 
       refresh () {
