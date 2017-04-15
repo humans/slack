@@ -10,11 +10,11 @@
             </a>
         </header>
 
-        <ul class="channels">
-            <li class="channel" v-for="channel in channels">
+        <ul class="sidebar-items">
+            <li class="sidebar-item" v-for="channel in channels">
                 <router-link
                     active-class="active"
-                    class="channel-link"
+                    class="sidebar-item-link"
                     :to="{ 
                          name: 'channel', 
                          params: { channel: channel.id },
@@ -54,34 +54,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.channels {
-    list-style: none;
-}
-
-.channel-link {
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-
-    display: block;
-    line-height: 1.4;
-    margin-right: 1rem;
-    padding-left: 1.5rem;
-    text-decoration: none;
-}
-
-.channel-link:before {
-    content: '#';
-    opacity: 0.35;
-}
-
-.channel-link.active {
-    background-color: var(--sidebar-highlight);
-    opacity: 1;
-}
-
-.channel-link:hover:not(.active) {
-    background-color: #f3956a;
-}
-</style>

@@ -33,11 +33,16 @@
 
 <script>
 import { mapMutations } from 'vuex';
+import Mousetrap from 'mousetrap';
 
 export default {
   methods: mapMutations({
-    close: 'modal/close'
+    close: 'modal/close',
   }),
+
+  mounted () {
+    Mousetrap.bind('esc', () => this.close());
+  },
 };
 </script>
 

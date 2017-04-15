@@ -40,6 +40,7 @@ export default {
     this.fetchTeamDetails();
     this.fetchChannels();
     this.fetchUserDetails();
+    this.fetchUsers();
   },
 
   methods: {
@@ -47,11 +48,17 @@ export default {
       updateTeam: 'updateTeam',
       updateUserDetails: 'updateUserDetails',
       refreshChannels: 'channel/refresh',
+      refreshUsers: 'refreshUsers',
     }),
 
     ...mapActions({
       selectChannel: 'channel/select'
     }),
+
+    fetchUsers () {
+      this.$http.get('/api/users')
+        .then(({ data }) => this.refreshUsers(data));
+    },
 
     fetchTeamDetails () {
       this.$http.get('/api/team')

@@ -12,6 +12,7 @@ export default new Vuex.Store({
     modal: null,
 
     team: {},
+    users: [],
     messages: [],
     currentUser: {},
   },
