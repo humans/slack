@@ -85,11 +85,6 @@ export default {
     text-decoration: none;
 }
 
-.sidebar-item-link:before {
-    content: '#';
-    opacity: 0.35;
-}
-
 .sidebar-item-link.active {
     background-color: var(--sidebar-highlight);
     opacity: 1;

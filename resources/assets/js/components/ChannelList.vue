@@ -14,7 +14,7 @@
             <li class="sidebar-item" v-for="channel in channels">
                 <router-link
                     active-class="active"
-                    class="sidebar-item-link"
+                    class="sidebar-item-link channel-link"
                     :to="{ 
                          name: 'channel', 
                          params: { channel: channel.id },
@@ -54,3 +54,10 @@ export default {
   },
 };
 </script>
+
+<style>
+.channel-link:before {
+    content: '#';
+    opacity: 0.35;
+}
+</style>
