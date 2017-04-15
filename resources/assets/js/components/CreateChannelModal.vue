@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapMutations } from 'vuex';
 import Modal from './Modal';
 
 export default {
@@ -33,7 +33,7 @@ export default {
   },
 
   methods: {
-    ...mapActions({
+    ...mapMutations({
       addChannel: 'channel/add'
     }),
 

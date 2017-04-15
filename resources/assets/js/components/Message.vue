@@ -1,7 +1,7 @@
 <template>
-    <div class="message">
+    <div class="message" :class="[ message.type ]">
         <img class="message-user-avatar" alt="User avatar" :src="message.messageable.avatar">
-
+ 
         <div class="message-wrapper">
             <div class="message-details">
                 <strong class="message-display-name">{{ message.messageable.username }}</strong>
@@ -50,6 +50,11 @@
 
     height: 38px;
     width: 38px;
+}
+
+.message.info .message-content {
+    color: #9e9ea6;
+    font-style: italic;
 }
 
 .message-content {

@@ -12,12 +12,6 @@ export const select = ({ commit, state }, channel) => {
     .listen('MessageSent', ({ message }) => commit('addMessage', message, { root: true }));
 };
 
-export const add = ({ dispatch, commit }, channel) => {
-  commit('add', channel);
-
-  dispatch('select', channel);
-};
-
 export const join = ({ state, commit }, current) => {
   commit('select', current);
 

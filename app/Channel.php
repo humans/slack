@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\ChannelJoined;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -77,6 +78,8 @@ class Channel extends Model
     public function addUser(User $user)
     {
         $this->users()->attach($user);
+
+        event(new ChannelJoined($this, $user));
     }
 
     /**

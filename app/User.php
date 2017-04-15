@@ -2,9 +2,10 @@
 
 namespace App;
 
-use Laravel\Passport\HasApiTokens;
 use App\Events\UserRegistered;
 use App\Events\MessageSent;
+use App\Events\ChannelJoined;
+use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -55,15 +56,45 @@ class User extends Authenticatable
      * @param  string  $message
      * @return Message
      */
-    public function sendMessage(Channel $channel, string $message)
+    public function sendMessage(Channel $channel, $message)
     {
-        $message = new Message(['content' => $message]);
+        return tap($this->send($channel, $message, 'message'), function ($message) {
+            broadcast(new MessageSent($message))->toOthers();
+        });
+    }
+
+    /**
+     * Send an info message to the channel.
+     *
+     * @param  Channel  $channel
+     * @param  string  $message
+     * @return Message
+     */
+    public function sendInfo(Channel $channel, $message)
+    {
+        return tap($this->send($channel, $message, 'info'), function ($message) {
+            broadcast(new MessageSent($message));
+        });
+    }
+
+    /**
+     * Send a message to the channel.
+     *
+     * @param  Channel  $channel
+     * @param  string  $message
+     * @param  string  $type
+     * @return Message
+     */
+    private function send(Channel $channel, $message, $type)
+    {
+        $message = new Message([
+            'content' => $message,
+            'type' => $type,
+        ]);
 
         $message->channel()->associate($channel);
 
         $message = $this->messages()->save($message)->load('user');
-
-        broadcast(new MessageSent($message))->toOthers();
 
         return $message;
     }
@@ -80,6 +111,8 @@ class User extends Authenticatable
 
         $channel->joined = true;
 
+        event(new ChannelJoined($channel, $this));
+
         return $channel;
     }
 
@@ -90,7 +123,9 @@ class User extends Authenticatable
      */
     public function configure()
     {
-        $this->channels()->attach($this->team->defaultChannels());
+        $this->team->defaultChannels()->each(function ($channel) {
+            $this->joinChannel($channel);
+        });
 
         $settings = new UserSettings;
 
