@@ -17,12 +17,16 @@ export default {
       conversation: state => state.conversation,
     }),
 
+    prefix () {
+      return this.conversation.class === 'user' ? '@' : '#';
+    },
+
     placeholder () {
-      if (! this.channel) {
+      if (! this.conversation) {
         return null;
       }
 
-      return `Message #${this.conversation.display_name}`;
+      return `Message ${this.prefix}${this.conversation.display_name}`;
     },
   },
 
