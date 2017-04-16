@@ -68,7 +68,6 @@ export default {
 
 .modal-close {
     border-radius: 50%;
-    background-color: #e8e8e8;
     color: #717274;
     height: 4rem;
     width: 4rem;
@@ -82,6 +81,10 @@ export default {
     position: absolute;
     top: 2rem;
     right: 5rem;
+}
+
+.modal-close:hover {
+    background-color: #e8e8e8;
 }
 
 .modal-close .icon {
