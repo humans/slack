@@ -2,8 +2,7 @@
 
 namespace App;
 
-use App\Events\ChannelCreated;
-use Illuminate\Database\Eloquent\Builder;
+use App\Events\ChannelCreated; use Illuminate\Database\Eloquent\Builder;
 
 class Team extends Model
 {
@@ -89,12 +88,23 @@ class Team extends Model
     }
 
     /**
+     * Return the user from the username.
+     *
+     * @param  string  $username
+     * @return User
+     */
+    public function user($username)
+    {
+        return $this->users()->whereUsername($username)->first();
+    }
+
+    /**
      * Return the channel from the name.
      *
      * @param  string  $name
      * @return Channel
      */
-    public function channel(string $name)
+    public function channel($name)
     {
         return $this->channels()->whereName($name)->first();
     }

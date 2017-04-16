@@ -13,54 +13,53 @@
 </template>
 
 <script>
-  import Message from './Message.vue';
-  import { mapState, mapMutations, mapActions } from 'vuex';
+import Message from './Message.vue';
+import { mapState, mapActions } from 'vuex';
 
-  export default {
-    components: { Message },
+export default {
+  components: { Message },
 
-    computed: mapState({
-      messages: 'messages',
-      currentChannel: state => state.channel.current,
-    }),
+  computed: mapState({
+    messages: 'messages',
+    currentChannel: state => state.channel.current,
+  }),
 
-    data () {
-      return { team: window.Slack.team };
-    },
+  data () {
+    return { team: window.Slack.team };
+  },
 
-    mounted () {
+  mounted () {
+    this.refresh();
+  },
+
+  watch: {
+    '$route' (route) {
       this.refresh();
     },
+  },
 
-    watch: {
-      '$route' (route) {
-        this.refresh();
-      },
+  methods: {
+    ...mapActions({
+      selectChannel: 'channel/select',
+      joinChannel: 'channel/join',
+    }),
+
+    join () {
+      this.$http
+        .post(`/api/channels/${this.currentChannel.id}/join`)
+        .then(({ data }) => this.joinChannel(data));
     },
 
-    methods: {
-      ...mapMutations(['addMessage', 'updateMessages']),
-      ...mapActions({
-        selectChannel: 'channel/select',
-        joinChannel: 'channel/join',
-      }),
+    refresh () {
+      this.$http.get(`/api/channels/${this.$route.params.channel}`)
+        .then(({ data }) => {
+          this.selectChannel(data)
 
-      join () {
-        this.$http
-          .post(`/api/channels/${this.currentChannel.id}/join`)
-          .then(({ data }) => this.joinChannel(data));
-      },
-
-      refresh () {
-        this.$http.get(`/api/channels/${this.$route.params.channel}`)
-          .then(({ data }) => {
-            this.selectChannel(data)
-
-            this.$http.patch(`/api/user/settings/active_channel/${data.id}`);
-          });
-      },
+          this.$http.patch(`/api/user/settings/conversation/channel/${data.id}`);
+        });
     },
-  };
+  },
+};
 </script>
 
 <style>

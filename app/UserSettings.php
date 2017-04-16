@@ -9,7 +9,7 @@ class UserSettings extends Model
      *
      * @var array
      */
-    protected $appends = ['conversation', 'active_conversation'];
+    protected $appends = ['conversation', 'active_conversation_type'];
 
     /**
      * Return the type of conversation.
@@ -27,9 +27,9 @@ class UserSettings extends Model
      * @param  string  $type
      * @return string
      */
-    public function getActiveConversationAttribute($type)
+    public function getActiveConversationTypeAttribute()
     {
-        return strtolower(class_basename($type));
+        return strtolower(class_basename($this->conversation_type));
     }
 
     /**

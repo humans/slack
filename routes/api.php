@@ -1,7 +1,10 @@
 <?php
 
 Route::middleware('auth:api')->domain('{team}.' . env('APP_DOMAIN'))->group(function () {
-    Route::patch('user/settings/active_channel/{channel}', 'UpdateUserActiveChannelController')->name('user.settings.active_channel');
+    Route::patch(
+        'user/settings/conversation/{type}/{id}',
+        'UpdateActiveConversationController'
+    )->name('user.settings.conversation');
 
     Route::get('team', 'TeamDetailsController')->name('team.details');
     Route::get('me', 'CurrentUserController')->name('me');
@@ -16,11 +19,11 @@ Route::middleware('auth:api')->domain('{team}.' . env('APP_DOMAIN'))->group(func
         'only' => ['index', 'show', 'store']
     ]);
 
-    Route::resource('available_channels', 'AvailableChannelsController', [
-        'only' => ['index']
-    ]);
-
     Route::resource('channels.messages', 'ChannelMessagesController', [
         'only' => ['store']
+    ]);
+
+    Route::resource('conversations', 'ConversationsController', [
+        'only' => ['show']
     ]);
 });

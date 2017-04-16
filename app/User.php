@@ -180,6 +180,43 @@ class User extends Authenticatable
     }
 
     /**
+     * Return the conversation the user.
+     *
+     * @param  string  $username
+     * @return Collection
+     */
+    public function conversation($username)
+    {
+        $user = $this->team->user($username);
+
+        return $this->sent($user)
+            ->merge($this->received($user))
+            ->sortByDesc('created_at');
+    }
+
+    /**
+     * Return the messages sent to the user.
+     *
+     * @param  User  $user
+     * @return Collection
+     */
+    private function sent(User $user)
+    {
+        return $this->messages()->with('user')->to($user)->get();
+    }
+
+    /**
+     * Return the msseages received from the user.
+     *
+     * @param  User  $user
+     * @return Collection
+     */
+    private function received($user)
+    {
+        return $this->conversations()->with('user')->from($user)->get();
+    }
+
+    /**
      * It has settings.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
@@ -187,6 +224,16 @@ class User extends Authenticatable
     public function settings()
     {
         return $this->hasOne(UserSettings::class);
+    }
+
+    /**
+     * It has many messages with users.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function conversations()
+    {
+        return $this->morphMany(Message::class, 'conversation');
     }
 
     /**

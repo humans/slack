@@ -79,14 +79,22 @@ export default {
     },
 
     redirectToTheLastChannel () {
+      let params = {};
+
       if (! this.$route.fullPath === '/') {
         return;
+      }
+
+      if (this.currentUser.settings.active_conversation_type === 'channel') {
+        params.channel = this.currentUser.settings.conversation.id;
+      } else {
+        params.user = this.currentUser.settings.conversation.username;
       }
 
       // Redirect the user to the last channel they were in.
       this.$router.push({
         name: this.currentUser.settings.active_conversation_type,
-        params: { channel: this.currentUser.settings.conversation_id },
+        params: params,
       });
     },
   },
