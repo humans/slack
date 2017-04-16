@@ -18,6 +18,7 @@
                     name: 'channel',
                     params: { channel: channel.id }
                   }">
+                <div class="details">
                   <span class="u-fw-100">#</span>
                   <strong class="u-fw-700">{{ channel.name }}</strong>
                   <small class="channel-joined [ u-fw-300 ]">JOINED</small>
@@ -25,6 +26,10 @@
                   <p class="list-item-description [ u-fs-i u-fw-100 ]">
                     Created by <span class="creator">jaggy</span> on <span class="date">{{ $moment(channel.created_at).format('MMM Do, YYYY') }}</span>
                   </p>
+                </div>
+                <div class="users-count pull-right">
+                  {{ channel.users_count }}
+                </div>
               </router-link>
           </div>
       </div>
@@ -86,8 +91,15 @@ export default {
     cursor: pointer;
 }
 
+.list-item:hover .users-count {
+    display: none;
+}
+
 .list-item a {
     color: #555459;
+
+    display: flex;
+    align-items: center;
 }
 
 .list-item-description {

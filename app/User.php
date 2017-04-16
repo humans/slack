@@ -292,7 +292,7 @@ class User extends Authenticatable
      */
     public function channels()
     {
-        return $this->belongsToMany(Channel::class)->orderBy('name');
+        return $this->belongsToMany(Channel::class)->withCount('users')->orderBy('name');
     }
 
     /**
