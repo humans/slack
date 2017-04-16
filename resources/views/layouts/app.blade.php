@@ -7,7 +7,7 @@
 
         <title>Laravel</title>
 
-        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,700i" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,700i,900" rel="stylesheet">
         <link href="/js/vue-styles.css" rel="stylesheet"/>
 
         <script>

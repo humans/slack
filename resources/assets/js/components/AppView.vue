@@ -11,7 +11,9 @@
         </section>
 
         <!-- Modal -->
-        <component v-if="modal" :is="modal"></component>
+        <transition name="slide-from-bottom">
+            <component v-if="modal" :is="modal"></component>
+        </transition>
     </main>
 </template>
 
@@ -152,4 +154,14 @@ html, body, #app {
 }
 
 .pull-right { margin-left: auto; }
+
+.slide-from-bottom-enter-active, .slide-from-bottom-leave-active {
+    transition: transform 0.25s, opacity .25s ease-in-out;
+}
+
+.slide-from-bottom-enter, .slide-from-bottom-leave-to {
+    opacity: 0;
+    transform: translateY(1rem);
+}
+
 </style>
