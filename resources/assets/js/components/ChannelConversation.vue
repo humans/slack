@@ -6,8 +6,8 @@
             :message="message">
         </message>
 
-        <div class="join-channel" v-if="! currentChannel.joined">
-            <button type="button" @click="join">Join #{{ currentChannel.name }}</button>
+        <div class="join-channel" v-if="! conversation.joined">
+            <button type="button" @click="join">Join #{{ conversation.name }}</button>
         </div>
     </div>
 </template>
@@ -21,7 +21,7 @@ export default {
 
   computed: mapState({
     messages: 'messages',
-    currentChannel: state => state.channel.current,
+    conversation: state => state.conversation,
   }),
 
   data () {
@@ -40,20 +40,20 @@ export default {
 
   methods: {
     ...mapActions({
-      selectChannel: 'channel/select',
       joinChannel: 'channel/join',
+      selectConversation: 'selectConversation',
     }),
 
     join () {
       this.$http
-        .post(`/api/channels/${this.currentChannel.id}/join`)
+        .post(`/api/channels/${this.conversation.id}/join`)
         .then(({ data }) => this.joinChannel(data));
     },
 
     refresh () {
       this.$http.get(`/api/channels/${this.$route.params.channel}`)
         .then(({ data }) => {
-          this.selectChannel(data)
+          this.selectConversation(data);
 
           this.$http.patch(`/api/user/settings/conversation/channel/${data.id}`);
         });

@@ -44,7 +44,7 @@ class MessageSent implements ShouldBroadcast
         $this->message->load('user', 'conversation');
 
         return new PrivateChannel(
-            $this->message->messageable->team->slug . '.channel.' . $this->message->conversation->name
+            $this->message->messageable->team->slug . '.conversation.' . $this->message->conversation->display_name
         );
     }
 }

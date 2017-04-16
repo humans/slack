@@ -50,10 +50,6 @@ export default {
       refreshUsers: 'refreshUsers',
     }),
 
-    ...mapActions({
-      selectChannel: 'channel/select'
-    }),
-
     fetchUsers () {
       this.$http.get('/api/users')
         .then(({ data }) => this.refreshUsers(data));

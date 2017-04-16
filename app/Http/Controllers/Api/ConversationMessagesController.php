@@ -6,25 +6,21 @@ use App\Team;
 use App\Channel;
 use Illuminate\Http\Request;
 
-class UpdateActiveConversationController extends Controller
+class ConversationMessagesController extends Controller
 {
     /**
-     * Update the user's active channel.
+     * Send the message in the channel.
      *
      * @param  Request  $request
      * @param  Team  $team
-     * @param  Channel  $channel
-     * @return \App\UserSettings
+     * @param  string  $type
+     * @param  int  $id
+     * @return Message
      */
-    public function __invoke(Request $request, Team $team, $type, $id)
+    public function store(Request $request, Team $team, $type, $id)
     {
-        $settings = $request->user()->settings;
-
-        // Refactor this into a method.
-        $settings->conversation()->associate($this->find($type, $id));
-        $settings->save();
-
-        return ['response' => true];
+        return $request->user()
+            ->sendMessage($this->find($type, $id), $request->message);
     }
 
     /**
@@ -51,12 +47,6 @@ class UpdateActiveConversationController extends Controller
      */
     private function find($type, $id)
     {
-        $model = $this->model($type);
-
-        if ($type === 'channel') {
-            return $model->find($id);
-        }
-
-        return $model->whereUsername($id)->first();
+        return $this->model($type)->find($id);
     }
 }

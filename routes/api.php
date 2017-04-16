@@ -19,9 +19,7 @@ Route::middleware('auth:api')->domain('{team}.' . env('APP_DOMAIN'))->group(func
         'only' => ['index', 'show', 'store']
     ]);
 
-    Route::resource('channels.messages', 'ChannelMessagesController', [
-        'only' => ['store']
-    ]);
+    Route::post('conversation/{type}/{id}/messages', 'ConversationMessagesController@store')->name('conversation.messages.store');
 
     Route::resource('conversations', 'ConversationsController', [
         'only' => ['show']

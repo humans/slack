@@ -20,7 +20,27 @@ class Channel extends Model
      *
      * @var array
      */
-    protected $appends = ['joined'];
+    protected $appends = ['class', 'display_name', 'joined'];
+
+    /**
+     * Return the model name.
+     *
+     * @return string
+     */
+    public function getClassAttribute()
+    {
+        return 'channel';
+    }
+
+    /**
+     * Return the display name for the view.
+     *
+     * @return string
+     */
+    public function getDisplayNameAttribute()
+    {
+        return $this->name;
+    }
 
     /**
      * Return if the user querying this joined the channel.

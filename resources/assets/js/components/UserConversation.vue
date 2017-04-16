@@ -31,10 +31,14 @@ export default {
 
   methods: {
     ...mapMutations(['updateMessages']),
+    ...mapActions(['selectConversation']),
+
     refresh () {
       this.$http.get(`/api/conversations/${this.$route.params.user}`)
         .then(({ data }) => {
-          this.updateMessages(data);
+          this.selectConversation(data);
+
+          this.$http.patch(`/api/user/settings/conversation/user/${this.$route.params.user}`);
         });
     },
   },

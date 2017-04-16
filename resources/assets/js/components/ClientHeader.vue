@@ -2,7 +2,7 @@
     <header class="client-header">
         <div class="message-details">
             <h2 class="conversation-name">
-                #{{ channel.name }}
+                {{ prefix }}{{ conversation.display_name }}
             </h2>
         </div>
     </header>
@@ -12,10 +12,16 @@
 import { mapState } from 'vuex';
 
 export default {
-  computed: mapState({
-    channel: state => state.channel.current
-  }),
-}
+  computed: {
+    ...mapState({
+      conversation: state => state.conversation,
+    }),
+
+    prefix () {
+      return this.conversation.class === 'user' ? '@' : '#';
+    },
+  },
+};
 </script>
 
 <style>

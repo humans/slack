@@ -2,7 +2,7 @@
 
 use App\Team;
 
-Broadcast::channel('{team}.channel.{channel}', function ($user, Team $team, $channel) {
+Broadcast::channel('{team}.conversation.{conversation}', function ($user, Team $team, $conversation) {
     return true;
 });
 

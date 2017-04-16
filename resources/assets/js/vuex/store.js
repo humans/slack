@@ -15,6 +15,7 @@ export default new Vuex.Store({
     users: [],
     messages: [],
     currentUser: {},
+    conversation: {},
   },
 
   actions,

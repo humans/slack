@@ -30,6 +30,13 @@ class User extends Authenticatable
     ];
 
     /**
+     * The fields to add after fetching the model.
+     *
+     * @var array
+     */
+    protected $appends = ['class', 'display_name'];
+
+    /**
      * Boot the model.
      *
      * @return void
@@ -50,15 +57,35 @@ class User extends Authenticatable
     }
 
     /**
+     * Return the model name.
+     *
+     * @return string
+     */
+    public function getClassAttribute()
+    {
+        return 'user';
+    }
+
+    /**
+     * Return the display name for the view.
+     *
+     * @return string
+     */
+    public function getDisplayNameAttribute()
+    {
+        return $this->username;
+    }
+
+    /**
      * Send a message in the channel.
      *
-     * @param  Channel  $channel
+     * @param  User|Channel  $conversation
      * @param  string  $message
      * @return Message
      */
-    public function sendMessage(Channel $channel, $message)
+    public function sendMessage($conversation, $message)
     {
-        return tap($this->send($channel, $message, 'message'), function ($message) {
+        return tap($this->send($conversation, $message, 'message'), function ($message) {
             broadcast(new MessageSent($message))->toOthers();
         });
     }
@@ -66,13 +93,13 @@ class User extends Authenticatable
     /**
      * Send an info message to the channel.
      *
-     * @param  Channel  $channel
+     * @param  User|Channel  $conversation
      * @param  string  $message
      * @return Message
      */
-    public function sendInfo(Channel $channel, $message)
+    public function sendInfo($conversation, $message)
     {
-        return tap($this->send($channel, $message, 'info'), function ($message) {
+        return tap($this->send($conversation, $message, 'info'), function ($message) {
             broadcast(new MessageSent($message));
         });
     }
@@ -80,19 +107,19 @@ class User extends Authenticatable
     /**
      * Send a message to the channel.
      *
-     * @param  Channel  $channel
+     * @param  User|Channel  $conversation
      * @param  string  $message
      * @param  string  $type
      * @return Message
      */
-    private function send(Channel $channel, $message, $type)
+    private function send($conversation, $message, $type)
     {
         $message = new Message([
             'content' => $message,
             'type' => $type,
         ]);
 
-        $message->conversation()->associate($channel);
+        $message->conversation()->associate($conversation);
 
         $message = $this->messages()->save($message)->load('user');
 
@@ -189,9 +216,11 @@ class User extends Authenticatable
     {
         $user = $this->team->user($username);
 
-        return $this->sent($user)
+        $user->latest_messages = $this->sent($user)
             ->merge($this->received($user))
             ->sortByDesc('created_at');
+
+        return $user;
     }
 
     /**
