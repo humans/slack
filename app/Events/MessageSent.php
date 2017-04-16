@@ -43,8 +43,14 @@ class MessageSent implements ShouldBroadcast
         // We have to load this so serialization will work.
         $this->message->load('user', 'conversation');
 
+        $conversation = $this->message->conversation->display_name;
+
+        if ($this->message->conversation->class === 'user') {
+            $conversation = $this->message->messageable->display_name;
+        }
+
         return new PrivateChannel(
-            $this->message->messageable->team->slug . '.conversation.' . $this->message->conversation->display_name
+            $this->message->messageable->team->slug . '.conversation.' . $conversation
         );
     }
 }
