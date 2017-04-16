@@ -16,7 +16,7 @@ class CreateBotsTable extends Migration
         Schema::create('bots', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->string('username');
             $table->string('default_image')->nullabe();
 

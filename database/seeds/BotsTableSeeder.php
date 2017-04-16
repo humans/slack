@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 
+use App\Bot;
+
 class BotsTableSeeder extends Seeder
 {
     /**
@@ -11,6 +13,10 @@ class BotsTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $bots = [
+            ['username' => 'slackbot'],
+        ];
+
+        array_map([Bot::class, 'create'], $bots);
     }
 }
