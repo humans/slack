@@ -1,30 +1,38 @@
 <template>
-  <modal class="channel-browser">
+    <modal class="channel-browser">
       <template slot="heading">Browse all {{ total }} channels</template>
 
       <div class="list-items">
-          <div class="channel-browser-divider">Channels you can join</div>
-          <div class="channel" v-for="channel in availableChannels">
+          <div class="list-item-divider" v-if="availableChannels.length">Channels you can join</div>
+          <div class="list-item" v-for="channel in availableChannels" @click="select(channel)">
               <router-link :to="{
                 name: 'channel',
-                params: { channel: channel.id }
-              }">
+                params: { channel: channel.id }}">
                   #{{ channel.name }}
               </router-link>
           </div>
 
-          <div class="channel-browser-divider">Channels you belong to</div>
-          <div class="channel" v-for="channel in joinedChannels">
-              <router-link to="{ name: 'channel', params: { channel: channel.id } }">
-                  #{{ channel.name }}
+          <div class="list-item-divider">Channels you belong to</div>
+          <div class="list-item" v-for="channel in joinedChannels" @click="select(channel)">
+              <router-link class="u-td-n" :to="{
+                    name: 'channel',
+                    params: { channel: channel.id }
+                  }">
+                  <span class="u-fw-100">#</span>
+                  <strong class="u-fw-700">{{ channel.name }}</strong>
+                  <small class="channel-joined [ u-fw-300 ]">JOINED</small>
+
+                  <p class="list-item-description [ u-fs-i u-fw-100 ]">
+                    Created by <span class="creator">jaggy</span> on <span class="date">{{ $moment(channel.created_at).format('MMM Do, YYYY') }}</span>
+                  </p>
               </router-link>
           </div>
       </div>
-  </modal>
+    </modal>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapMutations, mapGetters } from 'vuex';
 import Modal from './Modal.vue';
 
 export default {
@@ -35,5 +43,65 @@ export default {
     joinedChannels: 'channel/joined',
     total: 'channel/total',
   }),
-}
+
+  methods: {
+    ...mapMutations({
+      'closeModal': 'modal/close',
+    }),
+
+    select (channel) {
+      this.$router.push({
+        name: 'channel',
+        params: { channel: channel.id }
+      });
+
+      this.closeModal();
+    },
+  },
+};
 </script>
+
+<style>
+.list-items {
+    margin-top: 2rem;
+}
+
+.list-item-divider {
+    font-size: 0.875rem;
+    font-weight: 700;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 0.75rem 0.75rem;
+}
+
+.list-item {
+    border: 1px solid transparent;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 0.75rem 0.5rem;
+}
+
+.list-item:hover {
+    background-color: #edf7fd;
+    border: 1px solid #d3ecfa;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.list-item a {
+    color: #555459;
+}
+
+.list-item-description {
+    color: #727375;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+.channel-joined {
+    font-size: 0.675rem;
+    margin-left: 0.5rem;
+}
+
+.creator {
+    color: #2c2d30;
+}
+</style>

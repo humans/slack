@@ -153,6 +153,12 @@ html, body, #app {
     width: 220px;
 }
 
+.u-td-n { text-decoration: none; }
+.u-fs-i { font-style: italic; }
+.u-fw-100 { font-weight: 100; }
+.u-fw-300 { font-weight: 300; }
+.u-fw-400 { font-weight: 400; }
+.u-fw-700 { font-weight: 700; }
 .pull-right { margin-left: auto; }
 
 .slide-from-bottom-enter-active, .slide-from-bottom-leave-active {

@@ -59,7 +59,11 @@ export default {
 .modal-wrapper {
     margin: 0 auto;
     max-width: 40rem;
-    position: relative;
+    padding-top: 6rem;
+}
+
+.modal-body {
+    color: #67686e;
 }
 
 .modal-close {
@@ -77,7 +81,7 @@ export default {
 
     position: absolute;
     top: 2rem;
-    right: 0;
+    right: 5rem;
 }
 
 .modal-close .icon {
@@ -93,9 +97,5 @@ export default {
 
 .modal-heading {
     font-weight: 900;
-}
-
-.modal-header {
-    margin-top: 6rem;
 }
 </style>
