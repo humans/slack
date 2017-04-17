@@ -11,12 +11,15 @@
   - Vuex, Vue Router
   - babel presets
   - ES6 issues with production.
-  - Inject to prop or HTTP request?
+  - Population via prop or HTTP request.
   - Rendering to a main component `AppView`
-  - Global components?
+  - Global components versus prop components?
+  - Passport & Laravel Defaults pitfalls
+    Removing `window.Laravel` kinda breaks passport auth 'cause the CSRF token is looking for
+    it when doing the validation.
   - Mulititenancy & Echo
-  - Customizing Axios and Laravel default pitfalls
   - broadcast()->toOthers() pitfalls
+    That axios must be bound to the window for `toOthers` to work properly.
 - Laravel
   - You trigger events where?!
   - __invoke is not the devil
