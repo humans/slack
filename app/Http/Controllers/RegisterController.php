@@ -2,20 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Team;
 use App\User;
 use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
-    public function create()
+    /**
+     * Display the registration form.
+     *
+     * @param  Team  $team
+     * @return \Illuminate\View\View
+     */
+    public function create(Team $team)
     {
-        return view('register.create');
+        return view('register.create')->withTeam($team);
     }
 
-    public function store(Request $request)
+    /**
+     * Display the registration form.
+     *
+     * @param  Request  $request
+     * @param  Team  $team
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(Request $request, Team $team)
     {
-        User::create($request->only('name', 'email', 'password'));
+        $team->addUser($request->only('name', 'username', 'email', 'password'));
 
-        return redirect()->route('login.create');
+        return redirect()->route('login.create', $team);
     }
 }

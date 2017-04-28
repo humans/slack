@@ -13,8 +13,14 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\Event' => [
-            'App\Listeners\EventListener',
+        \App\Events\UserRegistered::class => [
+            \App\Listeners\DownloadGravatarImage::class,
+        ],
+        \App\Events\EmailUpdated::class => [
+            \App\Listeners\DownloadGravatarImage::class,
+        ],
+        \App\Events\ChannelJoined::class => [
+            \App\Listeners\SendInformationMessage::class,
         ],
     ];
 

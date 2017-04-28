@@ -15,12 +15,18 @@ class MessageSent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    /**
+     * The message we'll broadcast to those conencted.
+     *
+     * @var Message
+     */
     public $message;
 
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param  Message  $message
+     * @return MessageSent
      */
     public function __construct(Message $message)
     {
@@ -34,8 +40,25 @@ class MessageSent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        $this->message->load('user', 'channel');
+        // We have to load this so serialization will work.
+        $this->message->load('user', 'conversation');
 
-        return new PrivateChannel('channel.' . $this->message->channel->name);
+        return new PrivateChannel(
+            $this->message->messageable->team->slug . '.conversation.' . $this->conversation()->display_name
+        );
+    }
+
+    /**
+     * Return the conversation handle.
+     *
+     * @return string
+     */
+    private function conversation()
+    {
+        if ($this->message->conversation->class === 'user') {
+            return $this->message->messageable;
+        }
+
+        return $this->message->conversation;
     }
 }

@@ -1,51 +1,74 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+# Case Study: Slack
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+The case study of building Slack with Laravel and Vue.js.
 
-## About Laravel
+You can read the full write up here:
+- [Overview](https://medium.com/@jaggygauran/case-study-slack-with-laravel-vue-js-overview-837b49c70c3e)
+- Backend (coming soon)
+- Frontend (coming soon)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+## Installation
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+If you wanna host it on your own to see how it works, just follow the instructions.
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb combination of simplicity, elegance, and innovation give you tools you need to build any application with which you are tasked.
+Be warned though, I'm writing the instructions at 2 in the morning, things ~might~ will go wrong.
 
-## Learning Laravel
+### Pusher
 
-Laravel has the most extensive and thorough documentation and video tutorial library of any modern web application framework. The [Laravel documentation](https://laravel.com/docs) is thorough, complete, and makes it a breeze to get started learning the framework.
+Create a [Pusher](https://pusher.com) account.
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 900 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+Make sure your `.env` variables are all set. Keep track of that cluster!
 
-## Laravel Sponsors
+```
+PUSHER_APP_ID=
+PUSHER_APP_KEY=
+PUSHER_APP_SECRET=
+PUSHER_CLUSTER=
+```
 
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](http://patreon.com/taylorotwell):
+Also, change your pusher settings in `resources/assets/js/bootstrap.js`. I committed mine but, ¯\_(ツ)_/¯, add your key and cluster right there too.
 
-- **[Vehikl](http://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Styde](https://styde.net)**
-- **[Codecourse](https://www.codecourse.com)**
-- [Fragrantica](https://www.fragrantica.com)
+```
+Vue.prototype.$echo = window.echo = new Holler({
+  broadcaster: 'pusher',
+  key: '',
+  cluster: '',
+});
+```
 
-## Contributing
+### Backend
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+#### Seeding
 
-## Security Vulnerabilities
+I didn't really make a registration form for creating teams (sorry for that), so you'll either have to use `php artisan tinker`, or modify `database/seeds/TeamsTableSeeder.php` and add your preferred subdomain to make things work.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+#### Setting up
 
-## License
+Don't forget to run composer.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+```
+$ composer install
+```
+
+Also, we'll have to migrate the database, seed it, and set up Passport's defaults.
+
+```
+$ php artisan:fresh --seed && art passport:install
+```
+
+#### Hosting
+
+I'm running the app via [Laravel Valet](https://laravel.com/docs/master/valet).
+
+To link to the subdomains you'll be testing out, go to the project root and run `valet link <subdomain>.slack.dev`.
+
+You _should_ be able to access the registration form from there.
+
+### Frontend
+
+I don't think there'll be anything special here other than running yarn. _I think_.
+
+```
+$ yarn
+$ yarn run dev
+```

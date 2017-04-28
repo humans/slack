@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "56dbcb77cd2d342466d503e85f1c2cf1",
-    "content-hash": "097b14da39f9e9b47d51dbcbaa40b8b2",
+    "hash": "14f457075a3643ba84aba8a4c9327916",
+    "content-hash": "76e4d9fdacf3d696cda04114c7790f7c",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -459,16 +459,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.4.17",
+            "version": "v5.4.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "f7675d59e3863a58ecdff1a5ee1dcd0cff788f4b"
+                "reference": "d15ded55b5e690199393ea93a57edcbae20d1ffc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/f7675d59e3863a58ecdff1a5ee1dcd0cff788f4b",
-                "reference": "f7675d59e3863a58ecdff1a5ee1dcd0cff788f4b",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/d15ded55b5e690199393ea93a57edcbae20d1ffc",
+                "reference": "d15ded55b5e690199393ea93a57edcbae20d1ffc",
                 "shasum": ""
             },
             "require": {
@@ -584,7 +584,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2017-04-03 13:07:39"
+            "time": "2017-04-10 19:27:41"
         },
         {
             "name": "laravel/passport",
@@ -1638,6 +1638,60 @@
             "time": "2017-03-26 20:37:53"
         },
         {
+            "name": "spatie/laravel-migrate-fresh",
+            "version": "1.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-migrate-fresh.git",
+                "reference": "d7844712788563089d60ac648cc221b2b4e8a884"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-migrate-fresh/zipball/d7844712788563089d60ac648cc221b2b4e8a884",
+                "reference": "d7844712788563089d60ac648cc221b2b4e8a884",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "^5.3.28",
+                "illuminate/events": "^5.3.28",
+                "php": "^7.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^0.9.7",
+                "orchestra/testbench": "^3.3",
+                "phpunit/phpunit": "5.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\MigrateFresh\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A command to build up the database from scratch",
+            "homepage": "https://github.com/spatie/laravel-migrate-fresh",
+            "keywords": [
+                "database",
+                "eloquent",
+                "fresh",
+                "laravel-migrate-fresh",
+                "migrate",
+                "spatie"
+            ],
+            "time": "2017-03-22 19:47:39"
+        },
+        {
             "name": "swiftmailer/swiftmailer",
             "version": "v5.4.6",
             "source": {
@@ -2580,16 +2634,16 @@
         },
         {
             "name": "zendframework/zend-diactoros",
-            "version": "1.3.10",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-diactoros.git",
-                "reference": "83e8d98b9915de76c659ce27d683c02a0f99fa90"
+                "reference": "b03f285a333f51e58c95cce54109a4a9ed691436"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-diactoros/zipball/83e8d98b9915de76c659ce27d683c02a0f99fa90",
-                "reference": "83e8d98b9915de76c659ce27d683c02a0f99fa90",
+                "url": "https://api.github.com/repos/zendframework/zend-diactoros/zipball/b03f285a333f51e58c95cce54109a4a9ed691436",
+                "reference": "b03f285a333f51e58c95cce54109a4a9ed691436",
                 "shasum": ""
             },
             "require": {
@@ -2597,17 +2651,19 @@
                 "psr/http-message": "~1.0"
             },
             "provide": {
-                "psr/http-message-implementation": "~1.0.0"
+                "psr/http-message-implementation": "1.0"
             },
             "require-dev": {
+                "ext-dom": "*",
+                "ext-libxml": "*",
                 "phpunit/phpunit": "^4.6 || ^5.5",
                 "zendframework/zend-coding-standard": "~1.0.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.3-dev",
-                    "dev-develop": "1.4-dev"
+                    "dev-master": "1.4-dev",
+                    "dev-develop": "1.5-dev"
                 }
             },
             "autoload": {
@@ -2626,7 +2682,7 @@
                 "psr",
                 "psr-7"
             ],
-            "time": "2017-01-23 04:53:24"
+            "time": "2017-04-06 16:18:34"
         }
     ],
     "packages-dev": [
@@ -2844,16 +2900,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.6.0",
+            "version": "1.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "5a5a9fc8025a08d8919be87d6884d5a92520cefe"
+                "reference": "8e6e04167378abf1ddb4d3522d8755c5fd90d102"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/5a5a9fc8025a08d8919be87d6884d5a92520cefe",
-                "reference": "5a5a9fc8025a08d8919be87d6884d5a92520cefe",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/8e6e04167378abf1ddb4d3522d8755c5fd90d102",
+                "reference": "8e6e04167378abf1ddb4d3522d8755c5fd90d102",
                 "shasum": ""
             },
             "require": {
@@ -2882,7 +2938,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2017-01-26 22:05:40"
+            "time": "2017-04-12 18:52:22"
         },
         {
             "name": "phpdocumentor/reflection-common",

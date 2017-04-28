@@ -1,9 +1,14 @@
-<form action="{{ route('register.store') }}" method="POST">
+<form action="{{ route('register.store', $team) }}" method="POST">
     {{ csrf_field() }}
 
     <div>
         <label for="">Name</label>
         <input name="name" type="text" value="">
+    </div>
+
+    <div>
+        <label for="">Username</label>
+        <input name="username" type="text" value="">
     </div>
 
     <div>

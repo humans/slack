@@ -1,49 +1,24 @@
+import axios from 'axios';
+import Vue from 'vue';
+import Holler from './holler';
 
-window._ = require('lodash');
-
-/**
- * We'll load jQuery and the Bootstrap jQuery plugin which provides support
- * for JavaScript based Bootstrap features such as modals and tabs. This
- * code may be modified to fit the specific needs of your application.
- */
-
-window.$ = window.jQuery = require('jquery');
-
-require('bootstrap-sass');
-
-/**
- * Vue is a modern JavaScript library for building interactive web interfaces
- * using reactive data binding and reusable components. Vue's API is clean
- * and simple, leaving you to focus on building your next great project.
- */
-
-window.Vue = require('vue');
-
-/**
- * We'll load the axios HTTP library which allows us to easily issue requests
- * to our Laravel back-end. This library automatically handles sending the
- * CSRF token as a header based on the value of the "XSRF" token cookie.
- */
-
-window.axios = require('axios');
-
-window.axios.defaults.headers.common = {
-    'X-CSRF-TOKEN': window.Laravel.csrfToken,
-    'X-Requested-With': 'XMLHttpRequest',
+axios.defaults.headers.common = {
+  'X-CSRF-TOKEN': window.Slack.csrfToken,
+  'X-Requested-With': 'XMLHttpRequest',
 };
 
-/**
- * Echo exposes an expressive API for subscribing to channels and listening
- * for events that are broadcast by Laravel. Echo and event broadcasting
- * allows your team to easily build robust real-time web applications.
+/*
+ * We're binding axios, and echo to the window since Laravel Echo
+ * depends heavily on them being bound there.
+ *
+ * Now moment, we're binding it just because I wanna run some tests from
+ * the console 'cause I'm lazy.
  */
-
-import Echo from 'laravel-echo'
-
-window.Pusher = require('pusher-js');
-
-window.Echo = new Echo({
-    broadcaster: 'pusher',
-    key: 'aedd54192305c7a81468',
-    cluster: 'ap1',
+Vue.prototype.$moment = window.moment = require('moment');
+Vue.prototype.$http = window.axios = axios;
+Vue.prototype.$echo = window.echo = new Holler({
+  broadcaster: 'pusher',
+  key: 'aedd54192305c7a81468',
+  cluster: 'ap1',
 });
+
